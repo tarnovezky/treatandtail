@@ -1,0 +1,154 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buy▫️Treat&Tail</title>
+    <script src="https://kit.fontawesome.com/cd72f48d0a.js" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-9ndCyUa1zYbbkBV0U18OgR2K78pvl4l9E2T3jUHuicpVQQjGiee9KNKNz0dxAroE" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'assets/css/general.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/navbarstyle.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/footerstyle.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/infoblockstyle.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/buy.css' %}">
+</head>
+<body>
+    <div id="bg"></div>
+    <div id="Wrapper">
+        {% include 'shop/modules/_cap.html' %}
+
+        <div id="ProductSection">
+            <div id="ProductPhoto">
+                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+            </div>
+            <div id="UI">
+                <div id="ProductTitle">
+                    <p>{{ product.name }}</p>
+                </div>
+                <div id="RateDeliverRow">
+                    <div id="RateNumeric">
+                        <p>{{ product.rating|default:"4.8" }}</p>
+                    </div>
+                    <div class="rating_block">
+                    <div class="rating_bar" style="width: {{ rating_percentage }}%;"></div>
+
+                        <img src="{% static 'assets/img/rating.png' %}" alt="Rating">
+                    </div>
+                    <div id="DeliverTo">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <p>Deliver to Slovakia</p>
+                    </div>
+                </div>
+                <div id="Available">
+                    {% if product.aviable_num > 0 %}
+                        Currently available
+                    {% else %}
+                        Out of stock
+                    {% endif %}
+                </div>
+                <div id="OrderRow">
+                    <div id="Cost">
+                        <span id="Num">{{ product.price }}</span><span>$</span>
+                    </div>
+                    <div id="QuantBox">
+                        <div id="PM">
+                            <div id="Plus">
+                                <p>+</p>
+                            </div>
+                            <div id="Minus">
+                                <p>-</p>
+                            </div>
+                        </div>
+                        <div id="Quant">1</div>
+                    </div>
+
+                    <div id="AddToCart">
+                        <div id="ShopcartImg">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </div>
+                        <button id="addToCartButton" value="{{ product.id }}" class="add-to-cart-btn">Add to Cart</button>
+                    </div>
+
+                </div>
+
+                <div id="NameSizeVertical">
+                    <div id="FlavorName">
+                        <span>Flavor Name:</span>
+                        <span id="SelectedFlavor" class="Flavor">{{ product.brand_flavor }}</span>
+                    </div>
+                    <div id="FlavorBox">
+                        {% for flavor in flavors %}
+                        <div class="FlavorPicker {% if flavor == product.brand_flavor %}active{% endif %}" data-flavor="{{ flavor }}">{{ flavor }}</div>
+                        {% endfor %}
+                    </div>
+                    <div id="Size">
+                        <span>Size:</span>
+                        <span id="SizeNum">  {{ product.weight }}</span>
+                    </div>
+                </div>
+
+                <div id="Characteristics">
+                    <table>
+                        <tr>
+                            <td>Brand</td>
+                            <td>{{ product.name }}</td>
+                        </tr>
+                        <tr>
+                            <td>Flavor</td>
+                            <td id="SelectedFlavorInTable">{{ product.brand_flavor }}</td>
+                        </tr>
+                        <tr>
+                            <td>Diet Type</td>
+                            <td>{{ product.diet_type }}</td>
+                        </tr>
+                        <tr>
+                            <td>Age Range</td>
+                            <td>{{ product.age_range }}</td>
+                        </tr>
+                        <tr>
+                            <td>Item Form</td>
+                            <td>{{ product.item_form }}</td>
+                        </tr>
+                        <tr>
+                            <td>Expiration time</td>
+                            <td>{{ product.expiration_months }} m</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="paws_array">
+                <img src="{% static 'assets/img/paw_array.png' %}" alt="">
+            </div>
+        </div>
+
+        <div class="additional-info">
+            <div id="toggleSection">
+                <div class="toggle-item">
+                    <button class="toggle-button">
+                        Ingredients
+                        <span class="toggle-icon">&gt;</span>
+                    </button>
+                    <div class="toggle-text">
+                        <p>{{ product.ingredients|default:"No information available." }}</p>
+                    </div>
+                </div>
+                <div class="toggle-item">
+                    <button class="toggle-button">
+                        About this item
+                        <span class="toggle-icon">&gt;</span>
+                    </button>
+                    <div class="toggle-text">
+                        <p>{{ product.description|default:"No description provided." }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% include 'shop/modules/_features.html' %}
+        {% include 'shop/modules/_footer.html' %}
+    </div>
+    <script src="{% static 'assets/js/buy.js' %}"></script>
+</body>
+</html>

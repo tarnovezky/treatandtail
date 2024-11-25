@@ -1,0 +1,126 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our company▫️Treat&Tail</title>
+    <script src="https://kit.fontawesome.com/cd72f48d0a.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'assets/css/general.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/navbarstyle.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/footerstyle.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/infoblockstyle.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/company.css' %}">
+        {% include 'shop/modules/_bg.html' %}
+</head>
+<body>
+    <div id="bg"></div>
+    <div id="Wrapper">
+
+        <!-- Logo and Nav bar -->
+        {% include 'shop/modules/_cap.html' %}
+
+
+        <!-- First description block -->
+        <div id="Block1" class="InfoBlock">
+            <div class="SideImage">
+                <img src="{% static 'assets/img/company/cust.png' %}">
+            </div>
+            <div class="BlockText">
+                <div class="TitleText">
+                    <i class="fa-solid fa-paw"></i>
+                    <p>Pawsitively devoted</p>
+                </div>
+                <div class="MainText">
+                    <p>At Treat&Tail, our love for dogs extends beyond just providing
+
+                        them with nutritious food. We are dedicated to ensuring the
+
+                        well-being and happiness of every furry friend. From crafting
+
+                        our recipes with care to sourcing the finest ingredients, every
+
+                        decision we make is driven by our passion for dogs.
+
+
+                        Whether it's supporting local shelters, offering personalized
+
+                        nutrition advice, or simply sharing tips for a happy and healthy
+
+                        life with your companion, we're always here to lend a helping
+
+                        paw. Because when dogs thrive, we thrive too.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!-- Second description block -->
+        <div id="Block2" class="InfoBlock">
+            <div class="BlockText">
+                <div class="TitleText">
+                    <i class="fa-solid fa-paw"></i>  <p> Our mission</p>
+                </div>
+                <div class="MainText">
+                    <div id="SubBlock">
+                        <p>We're dedicated to crafting dog food
+
+                            that celebrates each pet's unique
+
+                            needs and preferences.
+
+                        We want to embody simplicity,
+
+                        providing organic nutrition that
+
+                        empowers dogs to thrive.
+
+
+                        </p>
+                        <div id="SubBlockImg">
+                            <img src="{% static 'assets/img/company/DaGang.png' %}">
+                        </div>
+                    </div>
+                    <div id="SubBlock2">
+                        <p>It is our goal to make your life easier with simple online ordering and convenient home delivery.
+
+                            With helpful features such as product videos, customer reviews and photos, you can always
+
+                            make an informed decision about the product for your pet.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="Block3" class="InfoBlock">
+            <div class="BlockText">
+                <div class="TitleText">
+                    <i class="fa-solid fa-paw"></i>
+                    <p>Meet the founder</p>
+                </div>
+                <div class="MainText">
+                    <p>Volodimir Diachuk founded Treat&Tail...
+
+                        бо тралалалалалалалалала іт.д. і т.п.
+
+
+                        Тут буде текст про твою роботу і чому
+
+                        ти це почав, як ти любиш песиків і.т.д.
+
+                        І що ти за здоровий спосіб життя і
+
+                        тралала)
+                    </p>
+                </div>
+            </div>
+            <div class="SideImage">
+                <img src="{% static 'assets/img/company/SobakaKrysa.png' %}">
+            </div>
+        </div>
+        <!-- Footer with inst, number etc. -->
+        <div id="Footer">
+                {% include 'shop/modules/_footer.html' %}
+        </div>
+    </div>
+</body>
+</html>

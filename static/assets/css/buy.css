@@ -1,0 +1,383 @@
+#LogoTop img {
+    width: 4vw;
+}
+
+#LogoTop {
+    width: fit-content;
+    aspect-ratio: 1/1;
+    margin-left: 4%;
+}
+
+#Header, #ProductSection {
+    background-color: rgba(254, 249, 243, 1);
+
+}
+
+#ProductSection {
+    padding-top: 5%;
+}
+
+#Features {
+    padding: 1vw 0;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+    width: 100%;
+    background-color: rgba(254, 237, 219, 1);
+}
+
+.Feature, .BlockText {
+    display: flex;
+    flex-direction: column;
+}
+
+.Feature {
+    width: 15%;
+    aspect-ratio: 1/1;
+    justify-content: center;
+    align-items: center;
+}
+
+.Feature img {
+    height: 70%;
+}
+
+.Feature p {
+    font-size: 0.8vw;
+    font-family: 'GilroyLight';
+    white-space-collapse:preserve-breaks;
+    text-align: center;
+}
+div.toggle-item:nth-child(1) > button:nth-child(1),
+div.toggle-item:nth-child(2) > button:nth-child(1)
+{
+  font-size: 1.1Vw;
+  font-weight: 1000 !important;
+}
+
+#ProductSection, #ProductSection div {
+    display: flex;
+}
+
+#ProductSection {
+    width: 100%;
+}
+
+#ProductPhoto {
+    width: 40%;
+    height: auto;
+    padding-left: 5%;
+    padding-right: 2%;
+    /* padding-bottom: 10%; */
+}
+
+#ProductPhoto img {
+    width: 100%;
+}
+
+#UI {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+}
+
+#ProductTitle {
+    color:rgba(239, 122, 59, 1);
+    font-size: 1.7vw;
+    white-space-collapse: preserve-breaks;
+}
+
+#RateDeliverRow {
+    justify-content: space-between;
+    width: 100%;
+    font-size: 1.55vw;
+    border-bottom: 3px solid black;
+    padding-bottom: 0.7%;
+    margin-top: 4%;
+    align-items: center;
+}
+
+#RatePaws {
+    width: 35%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0 0;
+    margin-left: -10%;
+}
+
+.rating_block > img:nth-child(1) {
+  max-width: 200px;
+}
+
+
+#DeliverTo {
+    font-size: 1vw;
+    align-items: center;
+    width: 35%;
+}
+
+#DecoPaws {
+    width: 20%;
+}
+
+#DeliverTo img {
+    width: 7%;
+}
+
+#DeliverTo p {
+    font-size: 0.8vw;
+    margin-left: 2%;
+}
+
+#RateNumeric {
+    margin-left: 4%;
+}
+
+#Available {
+    margin-top: 4%;
+    font-size: 1.4vw;
+}
+
+#OrderRow {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 3%;
+}
+
+#AddToCart {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 30%;
+    font-size: 1vw;
+    padding: 0.5% 3%;
+    box-sizing: content-box;
+    border: 1px solid black;
+    height: 50%;
+}
+
+#AddToCart span {
+    position: relative;
+    box-sizing: content-box;
+    white-space: nowrap;
+}
+
+#AddToCart img {
+    width: 50%;
+}
+
+#Cost {
+    letter-spacing: 0.4vw;
+    font-size: 1.5vw;
+}
+
+#QuantBox {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border: 1px solid black;
+    height: 70%;
+    font-size: 1.5vw;
+    width: 9%;
+}
+
+#PM {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 1.3vw;
+    width: 30%;
+    text-align: center;
+    box-sizing: border-box;
+    height: 100%;
+    margin-bottom: 10%;
+    margin-left: 7%;
+}
+
+#Plus, #Minus {
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    text-align: center;
+    align-items: center;
+    align-content: center;
+}
+
+#Quant {
+    width: 70%;
+    text-align: center;
+    align-items: center;
+    align-content: center;
+    display: flex;
+    justify-content: space-around;
+}
+
+#ToOrder {
+    background-color: rgba(239, 122, 59, 1);
+    color: aliceblue;
+    height: 60%;
+    padding: 0.5% 3%;
+    align-items: center;
+    font-size: 1vw;
+}
+
+#NameSizeVertical {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 2%;
+    font-size: 1.4vw;
+}
+
+.Flavor {
+    font-weight: bold;
+}
+
+#FlavorName .Flavor {
+    margin-left: 2%;
+}
+
+.rating_block {
+    position: relative; /* Enable positioning of child elements */
+    width: 100%;
+    max-width: 200px; /* Set max width for the block */
+    height: auto;
+}
+
+.rating_block img {
+    display: block;
+    width: 100%;
+    height: auto;
+    position: relative; /* Layer the image on top */
+    z-index: 2; /* Ensure the image is above the orange bar */
+}
+
+.rating_bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%; /* Match the height of the image */
+    background-color: #ee7a3c; /* Orange color */
+    width: 0%; /* Initial width, controlled by percentage */
+    z-index: 1; /* Place below the image */
+    transition: width 0.3s ease-in-out; /* Smooth width changes */
+}
+
+/* Flavor Picker Styles */
+#FlavorBox {
+    display: flex;
+    gap: 1%;
+    margin-top: 1%;
+}
+
+.FlavorPicker {
+    padding: 0.5vw 1vw;
+    border: 1px solid #ee7a3c; /* Orange border */
+    background-color: transparent;
+    color: black;
+    font-size: 1.1vw;
+    cursor: pointer;
+    text-align: center;
+    font-weight: bold;
+    box-shadow: none; /* Remove box-shadow */
+    transition: all 0.3s ease;
+}
+
+.FlavorPicker:hover {
+    background-color: #ee7a3c;
+    color: white;
+}
+
+.FlavorPicker.active {
+    background-color: #ee7a3c;
+    color: white;
+    border: none; /* Remove border for active state */
+}
+
+/* Characteristics Table */
+#Characteristics table {
+    width: 100%;
+    margin-top: 2%;
+    border-collapse: collapse;
+    font-size: 1.1vw;
+}
+
+#Characteristics td {
+    padding: 0.5vw 0;
+    color: #4b3b40;
+    vertical-align: top;
+}
+
+#Characteristics td:first-child {
+    font-weight: bold;
+    width: 30%;
+}
+
+#Characteristics td:last-child {
+    text-align: left;
+    width: 70%;
+}
+
+
+
+
+#toggleSection {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 70%;
+    margin: 2rem auto; /* Center horizontally */
+    background-color: #fef9f3; /* Background color for the entire section */
+}
+
+.toggle-item {
+    width: 100%;
+    position: relative;
+    background-color: #fef9f3;
+    border-top: 3px solid black; /* Top border */
+}
+
+.toggle-button {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    width: 100%;
+    text-align: left; /* Align text to the left */
+    background-color: transparent; /* Match the section background */
+    color: #4b3b40; /* Dark text color */
+    border: none; /* No borders for the button */
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.toggle-button:hover {
+    color: #ee7a3c; /* Highlight color on hover */
+}
+
+.toggle-icon {
+    font-size: 1.2rem;
+    transition: transform 0.3s ease; /* Smooth rotation */
+}
+
+.toggle-text {
+    display: none; /* Initially hidden */
+    padding: 0.5rem;
+    background-color: #fef9f3; /* Match parent background */
+    color: #4b3b40;
+    font-size: 0.9rem;
+}
+
+
+.additional-info{
+    background-color: #fef9f3;
+}
+
+.paws_array > img:nth-child(1) {
+   margin-left: 35%;
+}

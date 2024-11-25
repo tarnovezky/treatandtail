@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://kit.fontawesome.com/cd72f48d0a.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'assets/css/general.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/navbarstyle.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/footerstyle.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/infoblockstyle.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/product.css' %}">
+</head>
+<body>
+
+        {% block content %}
+            <div id="Features">
+            <div class="Feature">
+                <img src="{% static 'assets/img/product/DogFood.png' %}">
+                <p>
+                    Love in every bite
+                </p>
+            </div>
+            <div class="Feature">
+                <img src="{% static 'assets/img/product/EcoFriendly.png' %}">
+                <p>
+                    Only premium ingredients
+                    for peak nutrition
+                </p>
+            </div>
+            <div class="Feature">
+                <img src="{% static 'assets/img/product/NoChems.png' %}">
+                <p>
+                    No fillers or
+                    artificial additives
+                </p>
+            </div>
+            <div class="Feature">
+                <img src="{% static 'assets/img/product/SparklingDoggo.png' %}">
+                <p>
+                    Lots of organic goodness
+                    for vibrant health
+                </p>
+            </div>
+            <div class="Feature">
+                <img src="{% static 'assets/img/product/Luv.png' %}">
+                <p>
+                    Flourishing dog-friends
+                    guaranteed
+                </p>
+            </div>
+        </div>
+        {% endblock %}
+
+</body>
+</html>

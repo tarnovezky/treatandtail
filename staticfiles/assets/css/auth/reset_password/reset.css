@@ -1,0 +1,163 @@
+/* Ensure the body and wrapper take the full height of the viewport */
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#Wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+}
+
+.content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+}
+
+.main-block {
+    width: 50%; /* Adjust width as needed */
+    height: 50%;
+    padding: 50px;
+    background-color: rgba(254, 249, 243, 0.68);
+    backdrop-filter: blur(14px);
+
+    text-align: center; /* Center-align text inside the block */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional for depth */
+}
+#Welcome {
+    width: 100% !important;
+}
+
+.main-block > form:nth-child(3) > input:nth-child(3) {
+  padding: 20px;
+}
+.main-block > form:nth-child(3) > div:nth-child(2) {
+  padding: 20px;
+}
+.main-block > p:nth-child(2) {
+  padding: 20px;
+  font-size: 15px;
+}
+
+/* Style for input fields */
+.main-block form input[type="email"] {
+    width: 80%; /* Adjust the width to fit the form design */
+    padding: 10px; /* Padding for better usability */
+    margin: 10px 0; /* Space between fields */
+    border: 1px solid #ddd; /* Light gray border */
+    font-size: 16px; /* Slightly larger text */
+
+    outline: none; /* Remove default outline */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    transition: border 0.3s ease; /* Smooth transition on focus */
+}
+
+.main-block form input[type="email"]:focus {
+    border: 1px solid #ef7a3b; /* Highlight border in orange on focus */
+    box-shadow: 0 4px 6px rgba(255, 165, 0, 0.2); /* Highlight shadow */
+}
+
+/* Style for button */
+.main-block form input[type="submit"] {
+    background-color: #ef7a3b; /* Button color */
+    color: white; /* White text */
+    border: none; /* Remove border */
+    width: 80%; /* Match input width */
+    padding: 10px; /* Padding for better clickability */
+    font-size: 18px; /* Slightly larger font */
+    font-weight: bold; /* Bold text */
+    cursor: pointer; /* Pointer cursor on hover */
+    margin-top: 20px; /* Space above the button */
+    text-transform: uppercase; /* Optional: Make text uppercase */
+    outline: none; /* Remove default outline */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth effects */
+}
+
+/* Button hover effect */
+.main-block form input[type="submit"]:hover {
+    background-color: #ef7a3b; /* Slightly darker orange */
+    transform: scale(1.02); /* Subtle grow effect */
+}
+
+/* Button active effect */
+.main-block form input[type="submit"]:active {
+    background-color: #ef7a3b; /* Even darker orange when clicked */
+    transform: scale(0.98); /* Slight shrink effect */
+}
+
+#Wrapper {
+    min-height: 100vh;
+    width: 100vw !important;
+    margin: 0 auto;
+}
+
+/* Style for the main-block-done container */
+.main-block-done {
+    width: 50%;
+    margin: auto; /* Centers the block horizontally */
+    padding: 40px;
+    background-color: rgba(254, 249, 243, 0.68);
+    backdrop-filter: blur(10px);
+    border-radius: 10px; /* Optional for rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adds depth */
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px; /* Space between elements */
+}
+
+/* Style for the container-done */
+.container-done {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px; /* Space between text and button */
+    font-family: Arial, sans-serif; /* Optional font change */
+}
+
+/* Style for the span text */
+.container-done span {
+    font-size: 20px;
+    color: #333; /* Darker text for contrast */
+    font-weight: bold;
+}
+
+/* Style for the Log In button */
+.bttn-done {
+    display: inline-block;
+    background-color: #ef7a3b; /* Button color */
+    color: white; /* Button text color */
+    text-decoration: none;
+    font-size: 16px; /* Font size */
+    font-weight: bold; /* Bold text */
+    padding: 12px 24px; /* Padding for button size */
+    border: none;
+    border-radius: 0; /* Sharp corners */
+    cursor: pointer; /* Pointer cursor */
+    text-transform: uppercase; /* Optional: uppercase text */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
+}
+
+/* Hover effect for the button */
+.bttn-done:hover {
+    background-color: #e06f33; /* Slightly darker orange */
+    transform: scale(1.03); /* Subtle grow effect */
+}
+
+/* Active effect for the button */
+.bttn-done:active {
+    background-color: #d4622b; /* Even darker orange */
+    transform: scale(0.98); /* Slight shrink effect */
+}
+

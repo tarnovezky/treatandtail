@@ -1,0 +1,55 @@
+@font-face {
+    font-family: "Gilroy";
+    src: url("/static/assets/font/Gilroy-Regular.ttf");
+}
+
+@font-face {
+    font-family: "GilroyLight";
+    src: url("static/assets/font/Gilroy-Light.ttf");
+}
+
+
+* {
+    padding: 0;
+    margin: 0;
+    font-family: "Gilroy", sans-serif; /* Use your custom font here */
+    font-weight: 700; /* Optional, adjust as needed */
+    box-sizing: border-box;
+}
+
+
+
+
+body {
+    background-color: #FEF9F3; 
+    background-color: rgb(39, 34, 34);
+}
+
+#Wrapper {
+    min-height: 100vh;
+    width: 80vw;
+    margin: 0 auto;
+}
+
+#Header {
+    padding: 0.2% 2%;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#bg {
+    min-width: 100vw;
+    min-height: 100vh;
+    max-width: 270vw;
+    height: 100vh;
+    aspect-ratio: 1.75/1;
+    position: fixed;
+    z-index: -20;
+    background: url("img/doggo1HQ.png") no-repeat center center/cover ;
+
+    background-size: 98%;
+    filter: blur(10px);
+}

@@ -1,0 +1,2 @@
+[22/Nov/2024 18:14:01] "GET /static/assets/css/static/assets/font/Gilroy-Light.ttf HTTP/1.1" 404 2065
+try to add a folder by this rt and move here font gilroy light

@@ -1,0 +1,86 @@
+#Footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    height: 15%;
+    padding-bottom: 0.5vw;
+    padding-top: 0.1vw;
+    background-color: rgba(254, 249, 243, 1);
+}
+
+#Social {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    width: 33%;
+    justify-content: space-between;
+    align-self: center;
+    margin-top: 2%;
+
+}
+.social_elements{
+    margin: 0 auto;
+}
+.social_elements *{
+    margin: 0 5px !important;
+}
+
+#Social > * {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+
+    font-size: 1.1vw !important;
+    text-decoration: none;
+    color: black;
+    border-width: 1vw;
+    margin: 0 0;
+}
+
+#Social img {
+    width: 1.5vw;
+}
+
+#FooterPhone a, #Footer a{
+    color:black;
+    text-decoration: none;
+}
+
+#FooterLogo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1vw;
+}
+
+#FooterLogo img {
+    width: 5%;
+}
+
+#FooterLogo p {
+    letter-spacing: 0.15vw;
+    font-size: 1.3vw;
+}
+
+
+
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+#Wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Make sure the container spans the full height of the viewport */
+}
+
+.content {
+    flex: 1; /* Allow content to grow and take up available space */
+}
+
+

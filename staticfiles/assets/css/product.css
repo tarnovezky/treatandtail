@@ -1,0 +1,83 @@
+#LogoTop img {
+    width: 4vw;
+}
+
+#LogoTop {
+    width: fit-content;
+    aspect-ratio: 1/1;
+}
+
+#Block2 .TitleText .PawOrange {
+    margin-top: -5%;
+}
+
+#Block2 .TitleText p {
+    margin-left: 4%;
+}
+
+#Header {
+    background-color: rgba(254, 249, 243, 1);
+}
+
+#Block2 {
+    flex-direction: row-reverse;
+    background-color: rgba(254, 249, 243, 1);
+}
+
+.SideImage img {
+    width:90%;
+}
+
+#Block1, #Header {
+    padding-left: 7%;
+}
+
+#Block2 .SideImage {
+    transform: rotate(-32.83deg);
+    margin-right: 15%;
+    margin-top: 2%;
+}
+
+#Block2 .SideImage img {
+    width: 100%;
+}
+
+#Block1, #Features {
+    background-color: rgba(254, 237, 219, 1);
+}
+
+#Features {
+    justify-content: space-around;
+    width: 100%;
+}
+
+.Feature, .BlockText {
+    display: flex;
+    flex-direction: column;
+}
+
+.Feature {
+    width: 15%;
+    aspect-ratio: 1/1;
+    justify-content: center;
+    align-items: center;
+}
+
+.Feature img {
+    height: 70%;
+}
+
+.Feature p {
+    font-size: 0.8vw;
+    font-family: 'GilroyLight';
+    white-space-collapse:preserve-breaks;
+    text-align: center;
+}
+
+.MainText {
+    width: 100%;
+}
+
+#Block1 .SideImage {
+    margin-top: 2.6%;
+}

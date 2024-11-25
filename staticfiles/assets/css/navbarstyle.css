@@ -1,0 +1,42 @@
+nav {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    width: 58%;
+    justify-content: space-between;
+    margin-right: 3.5%;
+}
+
+nav a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 8%;
+    width: fit-content;
+    padding: 0 1%;
+    height: 10%;
+    line-height: 200%;
+    background-color: rgba(255, 255, 255, 0);
+    font-size: 1 vw;
+    text-decoration: none;
+    color: rgba(15, 15, 15, 1);
+    border-radius: 0.1vw;
+    border-color: rgba(20, 20, 20, 0.5);
+    border-width: 1vw;
+}
+
+nav > :nth-last-child(-n+2){
+    background-color: rgba(239, 122, 59, 1);
+    color: aliceblue;
+}
+
+nav a:hover {
+    background-color: rgba(1, 1, 1, 0.23);
+    font-weight: 600;
+    color: aliceblue;
+}
+#Header > nav:nth-child(2) > form:nth-child(5) {
+  display: inline;
+  margin-top: 0.5%;
+
+}

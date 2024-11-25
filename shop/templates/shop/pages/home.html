@@ -1,0 +1,84 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://kit.fontawesome.com/cd72f48d0a.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="{% static 'assets/css/general.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/navbarstyle.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/home.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Questrial&display=swap" rel="stylesheet">
+
+    <title>Home▫️Treat&Tail</title>
+{% include 'shop/modules/_bg.html' %}
+</head>
+<body>
+    <div id="bg"></div>
+    <div id="Wrapper">
+        <div id="Header">
+            <div id="LogoTop">
+                <img src="{% static 'assets/img/logo.png' %}">
+                <h2>Treat&Tail</h2>
+            </div>
+
+                <nav>
+                    <a href="{% url 'product_page' %}">The product</a>
+                    <a href="{% url 'our_company' %}">Our company</a>
+                    <a href="{% url 'why_us' %}">Why us?</a>
+
+                    {% if user.is_authenticated %}
+                        {% if user.is_superuser %}
+                            <a href="{% url 'admin:index' %}"><i class="fa-solid fa-user-tie"></i>Admin </a>
+                        {% endif %}
+
+                        <form method="POST" action="{% url 'logout' %}" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" style="background: none; border: none; color: inherit; cursor: pointer;">
+                                Logout <i class="fa-solid fa-right-from-bracket"></i> </button>
+                        </form>
+
+                    {% else %}
+                        <a href="{% url 'auth' %}"> Login<i class="fa-solid fa-right-to-bracket"></i></a>
+                    {% endif %}
+
+                    <a href="{% url 'contact_us' %}">Contact Us</a>
+                    <a href="{% url 'product_list' %}">Buy NOW</a>
+                </nav>
+        </div>
+        <div id="Slogan">
+            <h1>
+                PREMIUM DOG TREATS <br>
+                <span id="tn">FOR ADULT DOGS <br>
+                OF ALL BREEDS</span>
+            </h1>
+        </div>
+            <div class="footer-bar">
+                <div class="footer-content">
+                    <div class="social_elements" id="Social">
+                        <div class="social">
+                            <a class="social_links"><i class="fa-brands fa-instagram"></i></a>
+                        </div>
+                        <div class="social">
+                            <a class="social_links"><i class="fa-brands fa-square-facebook"></i></a>
+                        </div>
+                        <div class="social">
+                            <a class="social_links"><i class="fa-brands fa-x-twitter"></i></a>
+                        </div>
+                        <div class="social">
+                            <i class="fa-solid fa-envelope"></i>
+                            <a href="mailto: shop@treatandtail.us"> shop@treatandtail.us</a>
+                        </div>
+                        <div class="social">
+                            <i class="fa-solid fa-phone"></i>
+                            <a href="tel: +421950697030"> +421950697030</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+    </div>
+</body>
+</html>

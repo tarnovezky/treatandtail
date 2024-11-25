@@ -1,0 +1,146 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why Us▫️Treat&Tail</title>
+    <script src="https://kit.fontawesome.com/cd72f48d0a.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'assets/css/general.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/navbarstyle.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/footerstyle.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/infoblockstyle.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/whyus.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Questrial&display=swap" rel="stylesheet">
+
+</head>
+<body>
+
+
+
+
+    <div id="Wrapper">
+
+                {% include 'shop/modules/_cap.html' %}
+
+        <div id="PlayerDIV">
+            <video controls autoplay muted loop>
+                <source src="{% static 'assets/video/feeding-video.mp4' %}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+
+
+
+        <div id="Block1">
+            <div class="TitleText">
+                <i class="fa-solid fa-paw"></i>
+                <p>The benefits of our products</p>
+            </div>
+            <div class="MainText">
+                <p>At Treat&Tail, we believe that every dog deserves a diet that not only nourishes their body but
+
+                    also celebrates their uniqueness! We think every furry friend should have their food crafted using
+
+                    simple, GRAS (Generally Recognized as Safe) ingredients, carefully selected with love and
+
+                    passion for what we do.
+
+
+
+
+                    Our commitment to using organic ingredients ensures that each bite is packed with wholesome
+
+                    goodness, free from artificial additives or fillers
+                </p>
+            </div>
+        </div>
+        <div id="AspectsWheel">
+            <img src="{% static 'assets/img/whyus/AspectsWheelPH2.png' %}">
+        </div>
+        <div id="Reviews">
+            <div class="TitleText">
+                <i class="fa-solid fa-paw"></i>
+                <p>Pawsitive reviews from our customers</p>
+            </div>
+            <div id="ReviewsRack">
+                <div id="Review1" class="Review">
+                    <div class="ReviewIMG">
+                        <img src="{% static 'assets/img/whyus/rev1.jfif' %}">
+                    </div>
+                    <div class="RevRateAndName">
+                        <div class="rating_block">
+                            <div class="rating_bar" style="width: 50%;"></div> <!-- Orange block width -->
+                            <img src="{% static 'assets/img/ratingC_corrected_border.png' %}" alt="Rating">
+                        </div>
+                        <div class="Name">
+                            <p>Mike</p>
+                        </div>
+                    </div>
+                    <div class="MainText">
+                        <p>Тут буде текст з відгуком, правдоподібний і
+                            гарно написаний трататататататататататата
+                       Тут буде текст з відгуком, правдоподібний і
+                        гарно написаний трататататататататататата
+                       Тут буде текст з відгуком, правдоподібний і
+                        гарно написаний трататататататататататата
+                        </p>
+                    </div>
+                </div>
+                <div id="Review2" class="Review">
+                    <div class="ReviewIMG">
+                        <img src="{% static 'assets/img/whyus/rev2.jfif' %}">
+                    </div>
+                    <div class="RevRateAndName">
+                        <div class="rating_block">
+                            <div class="rating_bar" style="width: 75%;"></div> <!-- Orange block width -->
+                            <img src="{% static 'assets/img/ratingC_corrected_border.png' %}" alt="Rating">
+                        </div>
+
+
+<div class="Name">
+                            <p>Sarah</p>
+                        </div>
+                    </div>
+                    <div class="MainText">
+                        <p>Тут буде текст з відгуком, правдоподібний і
+                            гарно написаний трататататататататататата
+                       Тут буде текст з відгуком, правдоподібний і
+                        гарно написаний трататататататататататата
+                       Тут буде текст з відгуком, правдоподібний і
+                        гарно написаний трататататататататататата
+                        </p>
+                    </div>
+                </div>
+                <div id="Review3" class="Review">
+                    <div class="ReviewIMG">
+                        <img src="{% static 'assets/img/whyus/rev3.jfif' %}">
+                    </div>
+                    <div class="RevRateAndName">
+                        <div class="rating_block">
+                            <div class="rating_bar" style="width: 85%;"></div> <!-- Orange block width -->
+                            <img src="{% static 'assets/img/ratingC_corrected_border.png' %}" alt="Rating">
+                        </div>
+                        <div class="Name">
+                            <p>Alice</p>
+                        </div>
+                    </div>
+                    <div class="MainText">
+                        <p>Тут буде текст з відгуком, правдоподібний і
+                             гарно написаний трататататататататататата
+                        Тут буде текст з відгуком, правдоподібний і
+                         гарно написаний трататататататататататата
+                        Тут буде текст з відгуком, правдоподібний і
+                         гарно написаний трататататататататататата
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% include 'shop/modules/_footer.html' %}
+
+    </div>
+</body>
+</html>

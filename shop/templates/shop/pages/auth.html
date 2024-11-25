@@ -1,0 +1,175 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'assets/css/authstyle.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/general.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/navbarstyle.css' %}">
+    <title>Auth▫️Treat&Tail</title>
+    <script src="https://kit.fontawesome.com/bb2a1d3e20.js" crossorigin="anonymous"></script>
+</head>
+<body>
+{#        {% if messages %}#}
+{#            <div id="messages">#}
+{#                {% for message in messages %}#}
+{#                    <div class="alert alert-{{ message.tags }}">#}
+{#                        {{ message }}#}
+{#                    </div>#}
+{#                {% endfor %}#}
+{#            </div>#}
+{#        {% endif %}#}
+
+<style>
+    #bg {
+        background: url("{% static 'assets/img/home/doggo1HQ.png' %}") no-repeat center center/cover;
+        background-size: 98%;
+        filter: blur(10px);
+    }
+</style>
+
+    <div id="bg"></div>
+    <div id="Wrapper">
+    <div id="auth">
+        <div id="auth-left">
+            <img src="{% static 'assets/img/authlogo.png' %}">
+            <p>
+                PREMIUM DOG TREATS <br>
+                FOR ADULT DOGS  <br>
+                OF ALL BREEDS
+            </p>
+        </div>
+        <div id="AuthRight">
+            <div id="auth-right-top">
+                <div id="signin"><p>Sign in</p></div>
+                <div id="reg"><p>Registration</p></div>
+                <div id="bar"><div id="underLn"></div></div>
+            </div>
+            <div id="auth-right-bottom">
+
+                <!-- Login block -->
+
+                <form id="login" class="form-box" action="/signin" method="post">
+                    {% csrf_token %}
+                    <div id="LoginForm">
+                        <span class="label">Username</span>
+                        <div class="inputtext">
+                            <span class="fa-solid fa-user"></span>
+                            <input class="input" type="text" id="username" name="username" placeholder="Type a username" required>
+                        </div>
+                        <span class="label">Password</span>
+                        <div class="inputtext">
+                            <span class="fa-solid fa-key"></span>
+                            <input class="input" type="password" id="password1" name="pass1" placeholder="Type a password" required>
+                        </div>
+                        <div id="iforgor">
+                            <div id="rememberme">
+                                <div id="remembercheckbox">
+                                    <input type="checkbox" id="remember_me" name="remember_me">
+                                </div>
+                                <label for="remember_me">Remember me</label>
+                            </div>
+                            <a href="{% url 'reset_password' %}" class="forgot-password" id="forgor">Forgot Password?</a>
+
+                        </div>
+
+                    </div>
+                    <div id="LoginFinish">
+                        <div class="finish">
+                            <button class="sign-in" type="submit">Sign In</button>
+                        </div>
+                        <div class="continuewith">
+                            <div class="withgoogle">
+                                <span class="fa-brands fa-google"></span><span>Continue with Google</span>
+                            </div>
+                            <div class="withapple">
+                                <span class="fa-brands fa-apple"></span><span>Continue with Apple</span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- Registration block -->
+
+                <div id="registr">
+                    <form id="signup" class="form-box" action="{% url 'signup' %}" method="post">
+                        {% csrf_token %}
+                        <div id="RegForm">
+                            <span class="label">Username</span>
+                            <div class="inputtext">
+                                <span class="fa-solid fa-user"></span>
+                                <input name="username" type="text" placeholder="Create a username" required>
+                            </div>
+
+                            <div class="inputpair">
+                                <div class="collumn">
+                                    <span class="label">Name</span>
+                                    <div class="inputtext">
+                                        <span class="fa-regular fa-user"></span>
+                                        <input name="first_name" type="text" placeholder="Type a first name" required>
+                                    </div>
+                                </div>
+                                <div class="collumn">
+                                    <span class="label">Surname</span>
+                                    <div class="inputtext">
+                                        <span class="fa-regular fa-user"></span>
+                                        <input name="last_name" type="text" placeholder="Type a last name" required>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+                            <span class="label">E-mail</span>
+                            <div class="inputtext">
+                                <span class="fa-regular fa-envelope"></span>
+                                <input name="email" type="email" placeholder="Add an email" required>
+                            </div>
+                            <div class="inputpair">
+                                <div class="collumn">
+                                    <span class="label">Password</span>
+                                    <div class="inputtext">
+                                        <span class="fa-solid fa-key"></span>
+                                        <input name="password1" type="password" placeholder="Create a password" required>
+                                    </div>
+                                </div>
+                                <div class="collumn">
+                                    <span class="label">Repeat</span>
+                                    <div class="inputtext">
+                                        <span class="fa-solid fa-key"></span>
+                                        <input name="password2" type="password" placeholder="Confirm a password" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="checkemail">
+                            <span>Check email after registration for activating your account</span>
+                        </div>
+                        <div id="RegFinish">
+                            <div class="finish">
+                                <button type="submit"> <span> Sign Up</span></button>
+                            </div>
+                            <div class="continuewith">
+                                <div class="withgoogle">
+                                    <span class="fa-brands fa-google"></span><span>Continue with Google</span>
+                                </div>
+                                <div class="withapple">
+                                    <span class="fa-brands fa-apple"></span><span>Continue with Apple</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+<script src="{% static 'assets/js/auth.js' %}"></script>
+</html>

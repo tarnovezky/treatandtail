@@ -1,0 +1,64 @@
+.InfoBlock, .TitleText, #Features {
+    padding: 1.6% 2%;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.TitleText {
+    align-items: center;
+    font-size: 2.2vw;
+    color: rgba(239, 122, 59, 1);
+    margin-left: 5%;
+    white-space-collapse:preserve-breaks;
+    letter-spacing: 0.06vw;
+}
+
+.TitleText p {
+    margin-left: 3%;
+}
+
+.MainText {
+    white-space-collapse:preserve-breaks;
+    line-height: 60%;
+    font-size: 1.15vw;
+    margin-top: 2%;
+    margin-left: 5%;
+    width: 90%;
+}
+
+.MainText p {
+    font-family: 'GilroyLight';
+    font-weight: 900;
+    letter-spacing: 0.02vw;
+}
+
+.List {
+    flex-direction: column;
+    margin-top: 1%;
+}
+
+.List img {
+    margin-left:0%;
+    width: 3.2%;
+}
+
+.List span {
+    margin-left: 5%;
+    margin-top: -2%;
+    display: block;
+}
+
+.PawOrange {
+    /* width: 8%; */
+    width: 3.6vw;
+}
+
+.SideImage {
+    height: fit-content;
+    width: 30%;
+}
+
+.BlockText {
+    width: 60%;
+}

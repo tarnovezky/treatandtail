@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Confirm Your Email</title>
+    <style>
+        /* General email styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+        }
+        .email-container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        .header {
+            background-color: #ef7a3b;
+            color: #ffffff;
+            padding: 20px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .body {
+            padding: 20px;
+            color: #333333;
+        }
+        .body h2 {
+            font-size: 20px;
+            color: #ef7a3b;
+        }
+        .body p {
+            font-size: 16px;
+            line-height: 1.5;
+            margin: 10px 0;
+        }
+        .body a {
+            display: inline-block;
+            background-color: #ef7a3b;
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+        .link_text {
+          background-color: #7b7b7b;
+          font-size: 10px;
+          padding: 5px 10px;
+        }
+
+        .body a:hover {
+            background-color: #e06f33;
+        }
+        .footer {
+            background-color: #f1f1f1;
+            color: #888888;
+            text-align: center;
+            padding: 10px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <!-- Header Section -->
+        <div class="header">
+            Welcome to Treat&Tail!
+        </div>
+
+        <!-- Body Section -->
+        <div class="body">
+            <h2>Hi {{ name }},</h2>
+            <p>Thank you for signing up at TreatandTail. Please click the button below to activate your account:</p>
+            <a href="http://{{ domain }}/activate/{{ uid }}/{{ token }}/">Activate My Account</a>
+            <p>If the button above doesn't work, please copy and paste the following URL into your browser:</p>
+            <a class="link_text" href="http://{{ domain }}/activate/{{ uid }}/{{ token }}/">http://{{ domain }}/activate/{{ uid }}/{{ token }}/</a>
+            <p>Thank you!</p>
+        </div>
+
+        <!-- Footer Section -->
+        <div class="footer">
+            &copy; 2024 Treat&Tail. All rights reserved.
+        </div>
+    </div>
+</body>
+</html>

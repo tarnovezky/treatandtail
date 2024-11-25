@@ -1,0 +1,130 @@
+#bg {
+    filter: blur(20px);
+}
+
+#LogoTop img {
+    width: 60%;
+    margin-top: calc(1vw + 1.5vh);
+}
+#Wrapper {
+  min-height: 100vh;
+  width: 100vw !important;
+  margin: 0 auto;
+}
+
+#LogoTop {
+    position: relative;
+    margin-left: 5vw;
+    font-size: 1.5vw;
+    width: 15%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#LogoTop h2 {
+    font-weight: 480;
+    position: relative;
+}
+
+#Slogan {
+    font-weight: 500;
+    margin-top: calc(39vh + 3vw);
+    margin-left: 4vw;
+    color: aliceblue;
+    font-size: 1.4vw;
+}
+
+#Slogan #tn {
+    font-weight: 380;
+}
+
+nav {
+    margin-top: -5%;
+}
+
+#Header {
+    padding: 0 2%;
+}
+
+.buttons-home {
+    width: 300px;
+    font-size: 20px !important;
+}
+
+.footer-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 10px 0;
+    text-align: center;
+    z-index: 1000;
+    box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.footer-bar .footer-content {
+    max-width: 1200px; /* Match content width */
+    margin: 0 auto; /* Center the content */
+    padding: 0 15px; /* Add padding for responsiveness */
+}
+
+.footer-bar .social {
+    display: inline-block;
+    margin: 0 10px;
+    vertical-align: middle;
+}
+
+.footer-bar .social_links {
+    text-decoration: none;
+}
+
+.footer-bar .social i {
+    margin-right: 5px;
+}
+
+.footer-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 10px 0;
+    text-align: center;
+    z-index: 1000;
+    box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.footer-bar .footer-content {
+    max-width: 1200px; /* Match content width */
+    margin: 0 auto; /* Center the content */
+    padding: 0 15px; /* Add padding for responsiveness */
+}
+
+/* Reset text styles */
+.footer-bar a,
+.footer-bar a:link,
+.footer-bar a:visited,
+.footer-bar a:hover,
+.footer-bar a:active {
+    text-decoration: none; /* Remove underline */
+    color: inherit; /* Use the default text color */
+    font-size: inherit; /* Inherit font size */
+    font-weight: inherit; /* Inherit font weight */
+}
+
+/* Reset icon styles */
+.footer-bar .social i {
+    margin-right: 5px; /* Space for icons */
+    font-size: inherit; /* Inherit font size */
+    color: inherit; /* Use text color */
+}
+
+/* Reset divs in social */
+.footer-bar .social {
+    display: inline-block;
+    margin: 0 10px;
+    vertical-align: middle;
+}

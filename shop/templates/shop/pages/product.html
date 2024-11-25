@@ -1,0 +1,110 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product▫️Treat&Tail</title>
+
+    <script src="https://kit.fontawesome.com/cd72f48d0a.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'assets/css/general.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/navbarstyle.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/footerstyle.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/infoblockstyle.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/product.css' %}">
+    {% include 'shop/modules/_bg.html' %}
+</head>
+<body>
+    <div id="Wrapper">
+        <!-- Logo and Nav bar -->
+        {% include 'shop/modules/_cap.html' %}
+        <!-- First description block -->
+        <div id="Block1" class="InfoBlock">
+            <div class="SideImage">
+                <img src="{% static 'assets/img/product/MeatWheat.gif' %}">
+            </div>
+            <div class="BlockText">
+                <div class="TitleText">
+                    <i class="fa-solid fa-paw"></i>
+                    <p>Let your pet enjoy the moment</p>
+                </div>
+                <div class="MainText">
+                    <p>Fresh food made with real ingredients
+
+
+
+
+                        We use only simple, safe ingredients that are good for<br>
+                        our furry friends
+                    </p>
+                    <p class="List"><i class="fa-solid fa-paw"></i> <span>All-natural, farm-raised beef</span>
+                    </p>
+                    <p class="List"><i class="fa-solid fa-paw"></i> <span>Shelled oats</span>
+                    </p>
+                    <p class="List"><i class="fa-solid fa-paw"></i> <span>High quality flour</span>
+                    </p>
+                    <p>
+                        As a premium organic brand, we believe in keeping things
+
+                        simple and safe, which is why we only use GRAS (Generally
+
+                        Recognized as Safe) ingredients in our recipes.
+
+
+
+                        From tasty treats to wholesome meals, every bite is crafted with
+
+                        love and care to ensure the happiness and health of your
+
+                        doggies.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!-- Second description block -->
+        <div id="Block2" class="InfoBlock">
+            <div class="SideImage">
+                <img src="{% static 'assets/img/product/Package.png' %}">
+            </div>
+            <div class="BlockText">
+                <div class="TitleText">
+                    <i class="fa-solid fa-paw"></i>  <p> Looking for everybody’s
+                      favourites? We've got you!</p>
+                </div>
+                <div class="MainText">
+                    <p>Check out our customers' most beloved items, that
+
+                        have earned the paw of approval from both doggies
+
+                        and their owners alike!
+
+
+
+                        Treat&Tail is about individuality in every bag:
+
+
+                    </p>
+                    <p class="List">
+                        <i class="fa-solid fa-paw"></i> <span>We elevate every mealtime with a premium,
+
+                        organically crafted dining experience for your furry
+
+                        companion.
+                        </span>
+                    </p>
+                    <p class="List">
+                        <i class="fa-solid fa-paw"></i><span> We ensure product quality by using compact
+
+                        packaging
+                        </span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!-- That five images at the bottom -->
+            {% include 'shop/modules/_features.html' %}
+        <!-- Footer with inst, number etc. -->
+            {% include 'shop/modules/_footer.html' %}
+    </div>
+</body>
+</html>

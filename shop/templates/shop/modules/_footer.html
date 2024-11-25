@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://kit.fontawesome.com/cd72f48d0a.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'assets/css/general.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/navbarstyle.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/footerstyle.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/infoblockstyle.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/product.css' %}">
+</head>
+<body>
+    {% block content %}
+
+
+            <!-- Footer with inst, number etc. -->
+            <div id="Footer">
+                <div class="footer-text-box">
+                    <div class="social_elements" id="Social">
+                        <div class="social">
+                            <a class="social_links"><i class="social_elements fa-brands fa-instagram"></i></a>
+                        </div>
+
+                        <div class="social">
+                            <a class="social_links"><i class="social_elements fa-brands fa-square-facebook"></i></a>
+                        </div>
+
+                        <div class="social">
+                            <a class="social_links"><i class="fa-brands fa-x-twitter"></i></a>
+                        </div>
+                        <div class="social">
+                            <i class="fa-solid fa-envelope"></i>
+                            <a href="mailto: shop@treatandtail.us"> shop@treatandtail.us</a>
+                        </div>
+                        <div class="social">
+                            <i class="fa-solid fa-phone"></i>
+                            <a href="tel: +421950697030"> +421950697030</a>
+                        </div>
+                    </div>
+                </div>
+                <div id="FooterLogo" class="footer">
+                    <img src="{% static 'assets/img/logo.png' %}">
+                    <p>Treat&Tail</p>
+                </div>
+            </div>
+
+    {% endblock %}
+</body>
+</html>
