@@ -1,9 +1,9 @@
 #bg {
-    filter: blur(20px);
+    filter: blur(0px);
 }
 
 #LogoTop img {
-    width: 60%;
+    width: 100%;
     margin-top: calc(1vw + 1.5vh);
 }
 #Wrapper {
@@ -11,6 +11,15 @@
   width: 100vw !important;
   margin: 0 auto;
 }
+#Header > nav:nth-child(2) {
+  color: white;
+}
+#Header > nav:nth-child(2) > a {
+  color: white;
+}
+
+
+
 
 #LogoTop {
     position: relative;
@@ -47,6 +56,8 @@ nav {
 #Header {
     padding: 0 2%;
 }
+
+
 
 .buttons-home {
     width: 300px;
