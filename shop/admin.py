@@ -1,23 +1,50 @@
-from django.contrib import admin  # Ensure this is imported
+from django.contrib import admin
 from django.urls import reverse
 from django.utils.html import format_html
-from unfold.admin import ModelAdmin  # Import Unfold's ModelAdmin
+from unfold.admin import ModelAdmin
 
 from .models import (
     UserAdditionalInfo,
-    CallRequest, Subscription,
-    Comment, Review,
-    Product, Tag,
-    Cart, CartItem, Order, OrderItem
+    CallRequest,
+    Subscription,
+    Comment,
+    Review,
+    Product,
+    ProductFlavor,
+    Tag,
+    Cart,
+    CartItem,
+    Order,
+    OrderItem
 )
 
-admin.site.site_header = "TreatAndTail Administration"  # Optional: Admin panel header
-admin.site.site_title = "TreatAndTail Admin"            # Title shown in the browser tab
-admin.site.index_title = "Welcome to TreatAndTail Admin"  # Optional: Title for the index page
+
+# Inline for managing ProductFlavor within the Product admin
+class ProductFlavorInline(admin.TabularInline):
+    model = ProductFlavor
+    extra = 1  # Number of empty rows to display for adding new flavors
+    fields = ('flavor_name', 'price')  # Fields to display in the inline form
+
+
+@admin.register(Product)
+class ProductAdmin(ModelAdmin):
+    list_display = ('name', 'name_eng',  'aviable_num', 'sale', 'expiration_months')
+    search_fields = ('name', 'name_eng', 'article', 'brand_flavor')
+    list_filter = ('sale', 'diet_type', 'age_range', 'item_form')
+    prepopulated_fields = {'slug': ('name',)}
+    ordering = ('name',)
+    inlines = [ProductFlavorInline]  # Attach ProductFlavor inline to Product
+
+
+@admin.register(ProductFlavor)
+class ProductFlavorAdmin(ModelAdmin):
+    list_display = ('product', 'flavor_name', 'price')
+    search_fields = ('product__name', 'flavor_name')
+    list_filter = ('product',)
 
 
 @admin.register(UserAdditionalInfo)
-class UserAdditionalInfoAdmin(ModelAdmin):  # Use Unfold's ModelAdmin
+class UserAdditionalInfoAdmin(ModelAdmin):
     list_display = ('user', 'phone', 'date_of_birth', 'roles')
     search_fields = ('user__username', 'phone', 'roles')
     list_filter = ('roles',)
@@ -26,15 +53,6 @@ class UserAdditionalInfoAdmin(ModelAdmin):  # Use Unfold's ModelAdmin
             'fields': ('user', 'phone', 'date_of_birth', 'roles', 'picture'),
         }),
     )
-
-
-@admin.register(Product)
-class ProductAdmin(ModelAdmin):
-    list_display = ('name', 'name_eng', 'price', 'aviable_num', 'sale', 'expiration_months')
-    search_fields = ('name', 'name_eng', 'article', 'brand_flavor')
-    list_filter = ('sale', 'diet_type', 'age_range', 'item_form')
-    prepopulated_fields = {'slug': ('name',)}
-    ordering = ('name',)
 
 
 @admin.register(Tag)
@@ -87,7 +105,11 @@ class CartAdmin(ModelAdmin):
 
 @admin.register(CartItem)
 class CartItemAdmin(ModelAdmin):
-    list_display = ['product', 'quantity', 'cart']
+    list_display = ['product', 'quantity', 'cart', 'get_flavor']
+
+    def get_flavor(self, obj):
+        return obj.flavor.flavor_name if obj.flavor else "No Flavor"
+    get_flavor.short_description = "Flavor"
 
 
 @admin.register(Order)

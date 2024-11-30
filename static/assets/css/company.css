@@ -87,7 +87,10 @@
 #Block2 .BlockText {
     width: 100%;
 }
-
-#Footer {
+.footer,
+.footer-big{
     background-color: #feeddb !important;
+}
+.footer-text-box {
+  background-color: #feeddb;
 }

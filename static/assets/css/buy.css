@@ -14,7 +14,7 @@
 }
 
 #ProductSection {
-    padding-top: 5%;
+    padding-top: 3%;
 }
 
 #Features {
@@ -65,7 +65,6 @@ div.toggle-item:nth-child(2) > button:nth-child(1)
 
 #ProductPhoto {
     width: 40%;
-    height: auto;
     padding-left: 5%;
     padding-right: 2%;
     /* padding-bottom: 10%; */
@@ -154,10 +153,31 @@ div.toggle-item:nth-child(2) > button:nth-child(1)
     align-items: center;
     width: 30%;
     font-size: 1vw;
-    padding: 0.5% 3%;
     box-sizing: content-box;
     border: 1px solid black;
     height: 50%;
+    border-radius: 0;
+    padding: 0.9vw;
+    background-color: transparent;
+
+}
+
+.add-to-cart-btn{
+    padding: 0.9vw;
+    border: solid 1px black;
+    background-color: transparent;
+}
+
+#addToCartButton > span:nth-child(2) {
+  font-size: 1vw;
+  /*! padding: 0.5vw; */
+}
+#QuantBox *{
+  padding: 4px !important;
+}
+
+#ToOrderProduct > span:nth-child(1) {
+  font-size: 1vw !important;
 }
 
 #AddToCart span {
@@ -165,6 +185,8 @@ div.toggle-item:nth-child(2) > button:nth-child(1)
     box-sizing: content-box;
     white-space: nowrap;
 }
+
+
 
 #AddToCart img {
     width: 50%;
@@ -180,7 +202,7 @@ div.toggle-item:nth-child(2) > button:nth-child(1)
     flex-direction: row;
     align-items: center;
     border: 1px solid black;
-    height: 70%;
+    height: 50%;
     font-size: 1.5vw;
     width: 9%;
 }
@@ -206,7 +228,12 @@ div.toggle-item:nth-child(2) > button:nth-child(1)
     text-align: center;
     align-items: center;
     align-content: center;
+    cursor: pointer; /* Add pointer cursor */
 }
+#Plus{
+    padding-top: 5px;
+}
+
 
 #Quant {
     width: 70%;
@@ -217,14 +244,7 @@ div.toggle-item:nth-child(2) > button:nth-child(1)
     justify-content: space-around;
 }
 
-#ToOrder {
-    background-color: rgba(239, 122, 59, 1);
-    color: aliceblue;
-    height: 60%;
-    padding: 0.5% 3%;
-    align-items: center;
-    font-size: 1vw;
-}
+
 
 #NameSizeVertical {
     display: flex;
@@ -237,6 +257,26 @@ div.toggle-item:nth-child(2) > button:nth-child(1)
 .Flavor {
     font-weight: bold;
 }
+#FlavorBox {
+    display: flex;
+    flex-wrap: wrap; /* Allow wrapping to multiple rows */
+    gap: 5px; /* Horizontal spacing */
+    row-gap: 5px !important; /* Vertical spacing */
+    justify-content: flex-start; /* Align items to the start */
+    margin-top: 1%;
+}
+
+
+#ToOrderProduct {
+    padding: 0.9vw;
+    border-radius: 0px; /* Boxy style like Add to Cart */
+    border: solid 1px #ee7a3c; /* Orange border */
+    background-color: #ee7a3c; /* Always orange background */
+    color: white;
+    font-size: 16px !important;
+}
+
+
 
 #FlavorName .Flavor {
     margin-left: 2%;

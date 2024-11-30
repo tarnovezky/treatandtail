@@ -459,6 +459,9 @@
     transition: width 0.3s ease-in-out;
 }
 
+#FooterLogo {
+  background-color: #feeddb !important;
+}
 
 
 

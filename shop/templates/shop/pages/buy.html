@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buy▫️Treat&Tail</title>
+    <title>Buy ▫️ Treat&Tail</title>
     <script src="https://kit.fontawesome.com/cd72f48d0a.js" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-9ndCyUa1zYbbkBV0U18OgR2K78pvl4l9E2T3jUHuicpVQQjGiee9KNKNz0dxAroE" crossorigin="anonymous">
@@ -32,8 +32,7 @@
                         <p>{{ product.rating|default:"4.8" }}</p>
                     </div>
                     <div class="rating_block">
-                    <div class="rating_bar" style="width: {{ rating_percentage }}%;"></div>
-
+                        <div class="rating_bar" style="width: {{ rating_percentage }}%;"></div>
                         <img src="{% static 'assets/img/rating.png' %}" alt="Rating">
                     </div>
                     <div id="DeliverTo">
@@ -50,7 +49,7 @@
                 </div>
                 <div id="OrderRow">
                     <div id="Cost">
-                        <span id="Num">{{ product.price }}</span><span>$</span>
+                        <span id="Num">~~~</span><span>$</span>
                     </div>
                     <div id="QuantBox">
                         <div id="PM">
@@ -64,28 +63,37 @@
                         <div id="Quant">1</div>
                     </div>
 
-                    <div id="AddToCart">
-                        <div id="ShopcartImg">
-                            <i class="fa-solid fa-cart-shopping"></i>
-                        </div>
-                        <button id="addToCartButton" value="{{ product.id }}" class="add-to-cart-btn">Add to Cart</button>
-                    </div>
+                    <button id="addToCart"  value="{{ product.id }}" class="add-to-cart-btn">
+                        <span><i class="fa-solid fa-cart-shopping"></i> Add to Cart</span>
+                    </button>
 
+
+                    <button class="to-order" id="ToOrderProduct" value="{{ product.id }}">
+                        <span>To Order</span>
+                    </button>
                 </div>
+
+
 
                 <div id="NameSizeVertical">
                     <div id="FlavorName">
                         <span>Flavor Name:</span>
-                        <span id="SelectedFlavor" class="Flavor">{{ product.brand_flavor }}</span>
+                        <span id="SelectedFlavor" class="Flavor">Default</span>
                     </div>
                     <div id="FlavorBox">
                         {% for flavor in flavors %}
-                        <div class="FlavorPicker {% if flavor == product.brand_flavor %}active{% endif %}" data-flavor="{{ flavor }}">{{ flavor }}</div>
+                        <div class="FlavorPicker"
+                             data-flavor-id="{{ flavor.id }}"
+                             data-flavor-name="{{ flavor.flavor_name }}"
+                             data-price="{{ flavor.price }}">
+                            {{ flavor.flavor_name }}
+                        </div>
                         {% endfor %}
                     </div>
+
                     <div id="Size">
                         <span>Size:</span>
-                        <span id="SizeNum">  {{ product.weight }}</span>
+                        <span id="SizeNum">{{ product.weight }}</span>
                     </div>
                 </div>
 
@@ -97,7 +105,7 @@
                         </tr>
                         <tr>
                             <td>Flavor</td>
-                            <td id="SelectedFlavorInTable">{{ product.brand_flavor }}</td>
+                            <td id="SelectedFlavorInTable">Default</td>
                         </tr>
                         <tr>
                             <td>Diet Type</td>

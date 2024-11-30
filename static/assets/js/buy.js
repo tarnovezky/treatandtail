@@ -1,23 +1,12 @@
+
 // Flavor Picker Functionality
 const flavorPickers = document.querySelectorAll('.FlavorPicker');
 const selectedFlavor = document.getElementById('SelectedFlavor');
 const selectedFlavorInTable = document.getElementById('SelectedFlavorInTable');
+const priceSpan = document.getElementById('Num'); // For updating the price
+const quantityDisplay = document.getElementById('Quant'); // Quantity display
 
-flavorPickers.forEach(picker => {
-    picker.addEventListener('click', () => {
-        // Remove active class from all pickers
-        flavorPickers.forEach(p => p.classList.remove('active'));
-
-        // Add active class to the clicked picker
-        picker.classList.add('active');
-
-        // Update the flavor name in both the display and the table
-        const flavor = picker.dataset.flavor;
-        selectedFlavor.textContent = flavor;
-        selectedFlavorInTable.textContent = flavor;
-    });
-});
-
+// Toggle functionality for ingredients and additional info sections
 document.addEventListener("DOMContentLoaded", function () {
     const toggleButtons = document.querySelectorAll(".toggle-button");
 
@@ -38,55 +27,13 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-
-
-
-
-function getCookie(name) {
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            // Does this cookie string begin with the name we want?
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;}
-
-const csrftoken = getCookie('csrftoken');
-
-
-document.addEventListener('click', function(event) {
-    if (event.target && (event.target.classList.contains('add-to-cart-btn')
-        || event.target.classList.contains('remove-from-cart-btn')
-        || event.target.classList.contains('unauth'))) {
-
-        var pid = event.target.value;
-        console.log(pid); // Print the slug to console
-
-        if (event.target.classList.contains('add-to-cart-btn')) {
-            addToCart(pid);
-
-            // Notification("Aded to Cart", 3500);
-
-        } else if (event.target.classList.contains('remove-from-cart-btn')) {
-
-            // removeFromCart(id);
-            // Notification("Removed from Cart", 3500);
-
-        } else if (event.target.classList.contains('unauth')) {
-            // showNotification("show");
-        }
-    }
-});
-
-function addToCart(pid) {
-    let url = '/add_to_cart/';
-    let data = { id: pid };
+function addToCart(productId, flavorId, quantity) {
+    const url = '/add_to_cart/';
+    const data = {
+        id: productId,
+        flavor: flavorId,
+        quantity: quantity // Include quantity in the request
+    };
 
     fetch(url, {
         method: "POST",
@@ -96,13 +43,86 @@ function addToCart(pid) {
         },
         body: JSON.stringify(data)
     })
-    .then(res => res.json())
-    .then(data => {
-        console.log(data);
-    })
-    .catch(error => {
-        console.log(error);
-    });
-    console.log(pid);
-    console.log("add to cart func triggered");
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                console.log(data.message); // Log success message
+                alert(`${data.message}`);
+            } else if (data.error) {
+                console.error(data.error); // Log any errors
+                alert(`Error: ${data.error}`);
+            }
+        })
+        .catch(error => console.error(`Fetch error: ${error}`));
 }
+
+
+flavorPickers.forEach(picker => {
+    picker.addEventListener('click', () => {
+        // Remove active class from all pickers
+        flavorPickers.forEach(p => p.classList.remove('active'));
+
+        // Add active class to the clicked picker
+        picker.classList.add('active');
+
+        // Get flavor name and price from dataset
+        const flavor = picker.dataset.flavorName; // Flavor name
+        const price = picker.dataset.price; // Flavor price
+
+        // Update flavor name in display and table
+        selectedFlavor.textContent = flavor;
+        selectedFlavorInTable.textContent = flavor;
+
+        // Update price in the #Num span
+        priceSpan.textContent = price;
+    });
+});
+
+// Handle quantity increment/decrement
+document.getElementById('Plus').addEventListener('click', () => {
+    let quantity = parseInt(quantityDisplay.textContent, 10);
+    quantityDisplay.textContent = quantity + 1; // Increment quantity
+});
+
+document.getElementById('Minus').addEventListener('click', () => {
+    let quantity = parseInt(quantityDisplay.textContent, 10);
+    if (quantity > 1) {
+        quantityDisplay.textContent = quantity - 1; // Decrement quantity
+    }
+});
+
+// Function to get CSRF token for AJAX requests
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+const csrftoken = getCookie('csrftoken');
+
+// Add to Cart Functionality
+document.getElementById('addToCart').addEventListener('click', () => {
+    const productId = document.getElementById('addToCart').value; // Get the product ID
+    const selectedFlavorPicker = document.querySelector('.FlavorPicker.active');
+    const flavorId = selectedFlavorPicker ? selectedFlavorPicker.dataset.flavorId : null;
+
+    if (!flavorId) {
+        alert('Please select a flavor before adding to cart!');
+        return;
+    }
+
+    const quantity = parseInt(quantityDisplay.textContent, 10); // Get selected quantity
+
+    addToCart(productId, flavorId, quantity);
+});
+
+

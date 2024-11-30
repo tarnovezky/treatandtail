@@ -103,23 +103,19 @@ from django.shortcuts import get_object_or_404
 from .models import Product
 
 class ProductDetailView(DetailView):
-    model = Product  # Specify the model to use
-    template_name = 'shop/pages/buy.html'  # Specify the template to render
+    model = Product
+    template_name = 'shop/pages/buy.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        product = self.object  # Automatically fetched by the `model` attribute
+        product = self.object
 
-        # Example flavors - replace with actual dynamic flavors if necessary
-        flavors = ["Beef", "Pork", "Chicken"]
-
-        # Calculate rating percentage for the frontend
-        rating_percentage = min(max((product.rating if hasattr(product, 'rating') and product.rating else 4.5) * 20, 0), 100)
-
-        context['flavors'] = flavors
+        # Calculate the rating as a percentage (rating out of 5 stars)
+        rating_percentage = (product.rating / 5) * 100 if product.rating else 0
         context['rating_percentage'] = rating_percentage
-        return context
 
+        context['flavors'] = product.flavors.all()  # Fetch all related flavors
+        return context
 
 
 

@@ -49,9 +49,7 @@ class Product(models.Model):
     image = models.ImageField(upload_to="products/", verbose_name="Product Image", blank=True, null=True)
     aviable_num = models.IntegerField(verbose_name="Available Quantity", default=0)
     weight = models.FloatField(verbose_name="Weight (kg)", blank=True, null=True)
-    price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Price")
     sale = models.IntegerField(verbose_name="Discount Percentage", blank=True, null=True)
-    brand_flavor = models.CharField(max_length=100, verbose_name="Brand/Flavor", blank=True, null=True)
     diet_type = models.CharField(max_length=100, verbose_name="Diet Type", blank=True, null=True)
     age_range = models.CharField(max_length=100, verbose_name="Age Range", blank=True, null=True)
     item_form = models.CharField(max_length=50, verbose_name="Item Form", blank=True, null=True)
@@ -61,6 +59,12 @@ class Product(models.Model):
     tags = models.ManyToManyField("Tag", verbose_name="Tags", blank=True)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Created At")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Updated At")
+    rating = models.DecimalField(
+        max_digits=3,
+        decimal_places=1,
+        null=True,
+        blank=True,
+        verbose_name="Rating (0-5)")
 
     class Meta:
         verbose_name = "Product"
@@ -197,9 +201,12 @@ class Cart(models.Model):
         return f"Cart ({self.id}) for {self.user.username}"
 
 
+
+
 class CartItem(models.Model):
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE, related_name="items", verbose_name="Cart")
-    product = models.ForeignKey('Product', on_delete=models.CASCADE, related_name="cart_items", verbose_name="Product")
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="cart_items", verbose_name="Product")
+    flavor = models.ForeignKey(ProductFlavor, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Selected Flavor")
     quantity = models.PositiveIntegerField(default=1, verbose_name="Quantity")
 
     class Meta:
@@ -207,11 +214,11 @@ class CartItem(models.Model):
         verbose_name_plural = "Cart Items"
 
     def __str__(self):
-        return f"{self.quantity} x {self.product.name} in Cart ({self.cart.id})"
+        return f"{self.quantity} x {self.product.name} ({self.flavor.flavor_name if self.flavor else 'No Flavor'}) in Cart ({self.cart.id})"
 
     @property
     def total_price(self):
-        return self.product.price * self.quantity
+        return (self.flavor.price if self.flavor else self.product.price) * self.quantity
 
 
 

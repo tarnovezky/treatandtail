@@ -10,6 +10,20 @@ body {
     margin: 0 auto;
     padding: 20px;
 }
+#Header {
+  margin-top: -20px !important;
+}
+
+#Footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    height: 15%;
+    margin-bottom: -20px !important;
+    padding-top: 10px !important;
+    background-color: rgba(254, 249, 243, 1);
+}
 
 .card-grid {
     display: grid;
