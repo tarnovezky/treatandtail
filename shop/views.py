@@ -66,19 +66,7 @@ class HomePageView(TemplateView):
         return context
 
 
-class WhyUsPageView(TemplateView):
-    template_name = 'shop/pages/why_us.html'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
-        # Fetch reviews and calculate percentage for ratings
-        reviews = Review.objects.all()
-        for review in reviews:
-            review.rating_percentage = (review.rating / 5) * 100  # Convert rating to percentage
-
-        context['reviews'] = reviews
-        return context
 
 
 class ContactUsPageView(TemplateView):
@@ -157,4 +145,15 @@ class AuthPageView(TemplateView):
 
 
 
+
+class WhyUsPageView(TemplateView):
+    template_name = 'shop/pages/why_us.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        reviews = Review.objects.all()[:12]
+        for review in reviews:
+            review.rating_percentage = (review.rating / 5) * 100
+        context['reviews'] = reviews
+        return context
 

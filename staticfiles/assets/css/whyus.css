@@ -1,3 +1,10 @@
+* {
+    box-shadow: none !important;
+}
+
+
+
+
 #LogoTop img {
     width: 4vw;
 }
@@ -46,6 +53,7 @@
 }
 #Reviews {
     background-color: rgba(254, 249, 243, 1);
+    border-radius: 0px;
 }
 
 #ReviewsRack {
@@ -68,7 +76,6 @@
     width: 32%;
     background-color: rgba(254, 237, 219, 1);
     margin-bottom: 5%;
-    border-radius: 1%;
 }
 
 .ReviewIMG {
@@ -328,12 +335,17 @@
     max-width: 33.33%;
     box-sizing: border-box;
     padding: 10px;
-    background-color: rgba(254, 237, 219, 1);
+    background-color: #fef9f3 !important;
     border-radius: 5px;
     margin: 0 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     text-align: center;
 }
+.shadow-sm {
+  box-shadow: none !important
+}
+
+
 
 .ReviewIMG {
     width: 90%;
@@ -412,8 +424,8 @@
 }
 
 .carousel-item {
-    flex: 0 0 calc(100% / 3); /* Fit 3 items exactly in the view */
-    max-width: calc(100% / 3); /* Ensure proper max width */
+    flex: 0 0 100%; /* Fit 3 items exactly in the view */
+    max-width: 100%; /* Ensure proper max width */
     box-sizing: border-box;
     padding: 10px;
     text-align: center;
@@ -458,6 +470,173 @@
     z-index: 1;
     transition: width 0.3s ease-in-out;
 }
+
+#FooterLogo {
+  background-color: #feeddb !important;
+}
+
+
+
+
+
+
+.carousel-container {
+    width: 100%;
+    margin: auto;
+    background-color: rgba(254, 249, 243, 1);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.carousel-inner {
+    display: flex;
+    flex-wrap: nowrap;
+    height: 100%;
+}
+
+.carousel-item {
+    width: 100%; /* Take full width of the carousel */
+}
+
+.review-card {
+    height: 550px; /* Fixed height for the card */
+    width: 400px; /* Fixed width for the card */
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: rgba(254, 237, 219, 1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.card-img-top {
+
+    max-height: 360px;
+    object-fit: cover;
+    margin: auto;
+    padding: 21px 21px 0px 21px;
+}
+
+.card-body {
+    padding: 15px;
+}
+
+.card-title {
+    font-size: 1.5vw !important;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 10px;
+
+}
+
+.card-text {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 15px;
+    line-height: 1.4;
+}
+
+.rating_block {
+    position: relative;
+    width: 100%;
+    max-width: 200px;
+    margin: 10px auto;
+    height: auto;
+}
+
+.rating_bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: #ee7a3c; /* Orange color */
+    width: 0%; /* Dynamic width from backend */
+    z-index: 1;
+    transition: width 0.3s ease-in-out;
+}
+
+.review-arrow{
+    font-size: 50px;
+
+}
+/*.review-arrow {*/
+/*  background-color: #ed793b !important;*/
+/*  padding: 50px;*/
+/*  border-radius: 50px;*/
+/*}*/
+
+
+
+
+
+.mb-4 {
+    margin-bottom: 1.5rem !important;
+    border-radius: 0px;
+}
+
+.top-review-info {
+    display: flex;
+    align-items: center; /* Center vertically */
+    justify-content: space-between; /* Space out rating and name */
+    margin-bottom: 15px; /* Adjust spacing as needed */
+}
+
+.card-title {
+    font-size: 1.2rem;
+    color: #333;
+    text-align: center; /* Ensure text is centered */
+    padding-right: 20px;
+    margin-top: 5px !important;
+}
+
+
+.rating_block{
+    margin-left: 5px;
+}
+.card-title {
+    display: flex;
+    flex: content;
+    margin: auto;
+    margin-bottom: 15px;
+}
+.card.mb-4 {
+    background-color: #feeddb;
+    border-radius: 0px;
+    border: 0px;
+    height: 555px;
+}
+
+.shadow-sm {
+  box-shadow:none !important;
+}
+
+.row {
+  background-color: #fef9f3;
+    padding: 0 100px;
+}
+
+
+
+
+div.col-md-4:nth-child(2) > div:nth-child(1) > img:nth-child(1) {
+  border-radius: 0px;
+
+  padding: 21px 21px 0px 21px;
+  background-color: #feeddb;
+}
+.carousel-control-prev,
+.carousel-control-next {
+    filter: invert(80%);
+    opacity: 1;
+    border-radius: 50%;
+}
+.carousel-control-next,
+.carousel-control-prev {
+  border: solid 5px black !important;
+  height: 100px !important;
+  width: 100px !important;
+  top: 40% !important;
+}
+
 
 
 

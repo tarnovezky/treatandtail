@@ -13,6 +13,11 @@
     <link rel="stylesheet" href="{% static 'assets/css/infoblockstyle.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/whyus.css' %}">
     <link href="https://fonts.googleapis.com/css2?family=Questrial&display=swap" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 
 </head>
 <body>
@@ -59,88 +64,121 @@
         <div id="AspectsWheel">
             <img src="{% static 'assets/img/whyus/AspectsWheelPH2.png' %}">
         </div>
-        <div id="Reviews">
-            <div class="TitleText">
-                <i class="fa-solid fa-paw"></i>
-                <p>Pawsitive reviews from our customers</p>
-            </div>
-            <div id="ReviewsRack">
-                <div id="Review1" class="Review">
-                    <div class="ReviewIMG">
-                        <img src="{% static 'assets/img/whyus/rev1.jfif' %}">
-                    </div>
-                    <div class="RevRateAndName">
-                        <div class="rating_block">
-                            <div class="rating_bar" style="width: 50%;"></div> <!-- Orange block width -->
-                            <img src="{% static 'assets/img/ratingC_corrected_border.png' %}" alt="Rating">
-                        </div>
-                        <div class="Name">
-                            <p>Mike</p>
-                        </div>
-                    </div>
-                    <div class="MainText">
-                        <p>Тут буде текст з відгуком, правдоподібний і
-                            гарно написаний трататататататататататата
-                       Тут буде текст з відгуком, правдоподібний і
-                        гарно написаний трататататататататататата
-                       Тут буде текст з відгуком, правдоподібний і
-                        гарно написаний трататататататататататата
-                        </p>
-                    </div>
-                </div>
-                <div id="Review2" class="Review">
-                    <div class="ReviewIMG">
-                        <img src="{% static 'assets/img/whyus/rev2.jfif' %}">
-                    </div>
-                    <div class="RevRateAndName">
-                        <div class="rating_block">
-                            <div class="rating_bar" style="width: 75%;"></div> <!-- Orange block width -->
-                            <img src="{% static 'assets/img/ratingC_corrected_border.png' %}" alt="Rating">
-                        </div>
 
 
-<div class="Name">
-                            <p>Sarah</p>
-                        </div>
+
+<div id="Reviews" class="carousel-container">
+  <div class="TitleText">
+    <i class="fa-solid fa-paw"></i>
+    <p>Pawsitive reviews from our customers</p>
+  </div>
+  <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <!-- Carousel Item 1 -->
+      <div class="carousel-item active">
+        <div class="row">
+          {% for review in reviews|slice:":3" %}
+          <div class="col-md-4">
+            <div class="card mb-4 shadow-sm review-card">
+              <img src="{{ review.images.url }}" class="card-img-top" alt="Review Image">
+              <div class="card-body">
+                <div class="top-review-info">
+                    <div class="rating_block">
+                      <div class="rating_bar" style="width: {{ review.rating_percentage }}%;"></div>
+                      <img src="{% static 'assets/img/ratingC_corrected_border.png' %}" alt="Rating">
                     </div>
-                    <div class="MainText">
-                        <p>Тут буде текст з відгуком, правдоподібний і
-                            гарно написаний трататататататататататата
-                       Тут буде текст з відгуком, правдоподібний і
-                        гарно написаний трататататататататататата
-                       Тут буде текст з відгуком, правдоподібний і
-                        гарно написаний трататататататататататата
-                        </p>
-                    </div>
-                </div>
-                <div id="Review3" class="Review">
-                    <div class="ReviewIMG">
-                        <img src="{% static 'assets/img/whyus/rev3.jfif' %}">
-                    </div>
-                    <div class="RevRateAndName">
-                        <div class="rating_block">
-                            <div class="rating_bar" style="width: 85%;"></div> <!-- Orange block width -->
-                            <img src="{% static 'assets/img/ratingC_corrected_border.png' %}" alt="Rating">
-                        </div>
-                        <div class="Name">
-                            <p>Alice</p>
-                        </div>
-                    </div>
-                    <div class="MainText">
-                        <p>Тут буде текст з відгуком, правдоподібний і
-                             гарно написаний трататататататататататата
-                        Тут буде текст з відгуком, правдоподібний і
-                         гарно написаний трататататататататататата
-                        Тут буде текст з відгуком, правдоподібний і
-                         гарно написаний трататататататататататата
-                        </p>
+                    <div class="card-title-block">
+                        <span class="card-title">{{ review.name }}</span>
                     </div>
                 </div>
+
+                <p class="card-text">{{ review.description }}</p>
+
+              </div>
             </div>
+          </div>
+          {% endfor %}
         </div>
+      </div>
+
+      <!-- Carousel Item 2 -->
+      <div class="carousel-item">
+        <div class="row">
+          {% for review in reviews|slice:"3:6" %}
+          <div class="col-md-4">
+            <div class="card mb-4 shadow-sm review-card">
+              <img src="{{ review.images.url }}" class="card-img-top" alt="Review Image">
+              <div class="card-body">
+                <div class="top-review-info">
+                    <div class="rating_block">
+                      <div class="rating_bar" style="width: {{ review.rating_percentage }}%;"></div>
+                      <img src="{% static 'assets/img/ratingC_corrected_border.png' %}" alt="Rating">
+                    </div>
+                    <div class="card-title-block">
+                        <span class="card-title">{{ review.name }}</span>
+                    </div>
+                </div>
+
+                <p class="card-text">{{ review.description }}</p>
+
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Carousel Item 3 -->
+      <div class="carousel-item">
+        <div class="row">
+          {% for review in reviews|slice:"6:9" %}
+          <div class="col-md-4">
+            <div class="card mb-4 shadow-sm review-card">
+              <img src="{{ review.images.url }}" class="card-img-top" alt="Review Image">
+              <div class="card-body">
+                <div class="top-review-info">
+                    <div class="rating_block">
+                      <div class="rating_bar" style="width: {{ review.rating_percentage }}%;"></div>
+                      <img src="{% static 'assets/img/ratingC_corrected_border.png' %}" alt="Rating">
+                    </div>
+                    <div class="card-title-block">
+                        <span class="card-title">{{ review.name }}</span>
+                    </div>
+                </div>
+
+                <p class="card-text">{{ review.description }}</p>
+
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+
+
+
+      <!-- Add more carousel-item blocks if needed -->
+    </div>
+
+    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-bs-slide="prev">
+      <i class="review-arrow fa-solid fa-arrow-left"></i>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-bs-slide="next">
+      <i class="review-arrow fa-solid fa-arrow-right"></i>
+    </a>
+  </div>
+</div>
+
+
+
+
+
 
         {% include 'shop/modules/_footer.html' %}
 
     </div>
+<script src="{% static 'assets/js/whyus.js' %}"></script>
+
 </body>
 </html>
