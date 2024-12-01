@@ -1,20 +1,8 @@
-from lib2to3.fixes.fix_input import context
-from django.contrib.auth import authenticate, login
-from django.contrib.sites.shortcuts import get_current_site
-from django.http import HttpResponse
-from django.template.loader import render_to_string
-from django.views.generic import TemplateView, DetailView, ListView
-from .models import Review
-from django.views.generic import TemplateView
 from shop.models import Review
-from django.shortcuts import get_object_or_404
-from django.views.generic import TemplateView
-from shop.models import Product
-from shop.services.email import send_email
 from django.views.generic import ListView
-from django.shortcuts import get_object_or_404
+from django.views.generic import TemplateView
+from django.views.generic import DetailView
 from .models import Product
-
 class ProductPageView(TemplateView):
     template_name = 'shop/pages/product.html'
 
@@ -82,13 +70,7 @@ class ContactUsPageView(TemplateView):
         return context
 
 
-from django.views.generic import TemplateView
-from django.shortcuts import get_object_or_404
-from .models import Product
 
-from django.views.generic import DetailView
-from django.shortcuts import get_object_or_404
-from .models import Product
 
 class ProductDetailView(DetailView):
     model = Product
@@ -98,11 +80,27 @@ class ProductDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         product = self.object
 
+        # Get quantity from the URL parameter, defaulting to 1
+        qty = self.kwargs.get('qty', 1)
+        try:
+            quantity = int(qty)
+            if quantity < 1:
+                quantity = 1  # Ensure quantity is at least 1
+        except ValueError:
+            quantity = 1  # Fallback if qty is not an integer
+
+        context['quantity'] = quantity
+
         # Calculate the rating as a percentage (rating out of 5 stars)
         rating_percentage = (product.rating / 5) * 100 if product.rating else 0
         context['rating_percentage'] = rating_percentage
 
-        context['flavors'] = product.flavors.all()  # Fetch all related flavors
+        # Fetch related flavors or provide a default message
+        context['flavors'] = product.flavors.all()
+
+        # Add stock availability info
+        context['in_stock'] = product.aviable_num > 0
+
         return context
 
 

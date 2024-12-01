@@ -39,8 +39,17 @@
                                 Soon <i class="fa-solid fa-circle-xmark"></i>
                             {% endif %}
                         </div>
-                        <a href="#" class="btn add-to-cart">Add to Cart</a>
+                        <div class="buttons-box">
+                            <div class="quantity-box">
+                                <button class="quantity-btn" data-action="decrease">-</button>
+                                <span class="quantity-display">1</span>
+                                <button class="quantity-btn" data-action="increase">+</button>
+                            </div>
+                            <!-- Redirect button -->
+                            <button class="add-to-cart btn redirect-buy" data-product-slug="{{ product.slug }}">Buy</button>
+                        </div>
                     </div>
+
                     <div class="additional-info short-characteristic">
                         <p><strong>Tags:</strong> {% for tag in product.tags.all %} {{ tag.name }} {% endfor %}</p>
                         <p><strong>Weight:</strong> {{ product.weight }} kg</p>

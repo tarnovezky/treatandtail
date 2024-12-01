@@ -93,7 +93,8 @@ body {
     background-color: #ef7a3b;
     color: white;
     border: none;
-    padding: 10px 15px;
+    margin: auto;
+    padding: 7px 35px;
     text-align: center;
     font-weight: bold;
     text-decoration: none;
@@ -141,4 +142,41 @@ body {
     .card-grid {
         grid-template-columns: 1fr;
     }
+}
+
+
+
+
+.buttons-box{
+    display: flex;
+    flex-direction: row;
+}
+.quantity-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    width: 85px;
+    border: solid 1px black;
+    margin: auto;
+}
+
+
+.quantity-btn {
+    padding: 5px 10px;
+    background-color: transparent;
+    color: black;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.quantity-btn:hover {
+    background-color: #ef7a3b;
+}
+
+.quantity-display {
+    margin: 0 10px;
+    font-size: 1rem;
+    font-weight: bold;
 }

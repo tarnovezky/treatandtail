@@ -269,7 +269,7 @@ div.toggle-item:nth-child(2) > button:nth-child(1)
 
 #ToOrderProduct {
     padding: 0.9vw;
-    border-radius: 0px; /* Boxy style like Add to Cart */
+    border-radius: 0; /* Boxy style like Add to Cart */
     border: solid 1px #ee7a3c; /* Orange border */
     background-color: #ee7a3c; /* Always orange background */
     color: white;
@@ -303,7 +303,7 @@ div.toggle-item:nth-child(2) > button:nth-child(1)
     left: 0;
     height: 100%; /* Match the height of the image */
     background-color: #ee7a3c; /* Orange color */
-    width: 0%; /* Initial width, controlled by percentage */
+    width: 0; /* Initial width, controlled by percentage */
     z-index: 1; /* Place below the image */
     transition: width 0.3s ease-in-out; /* Smooth width changes */
 }
