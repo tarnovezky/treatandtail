@@ -5,11 +5,14 @@ from .views import (
     WhyUsPageView, CartPageView, ProductDetailView, AuthPageView, HomePageView)
 
 from shop.controllers.auth import AuthController
-from shop.controllers.cart import add_to_cart
+from shop.controllers.cart import add_to_cart, update_quantity, clear_cart, remove_cart_item
 from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
-    path('add_to_cart/', add_to_cart, name='add_to_cart'),
+    path('cart/add/', add_to_cart, name='add_to_cart'),
+    path('cart/remove/<int:item_id>/', remove_cart_item, name='remove_cart_item'),
+    path('cart/update_quantity/', update_quantity, name='update_quantity'),
+    path('cart/clear/', clear_cart, name='clear_cart'),
 
 
     path('', HomePageView.as_view(), name='home'),

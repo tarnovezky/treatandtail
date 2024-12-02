@@ -1,38 +1,29 @@
 from shop.models import Review
 from django.views.generic import ListView
-from django.views.generic import TemplateView
 from django.views.generic import DetailView
 from .models import Product
+from django.views.generic import TemplateView, View
+from .models import Cart, CartItem
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
+import json
+from django.shortcuts import redirect
+from django.contrib.auth.decorators import login_required
+
 class ProductPageView(TemplateView):
     template_name = 'shop/pages/product.html'
 
-    # Optional: Define context data if needed
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
         return context
-
 
 
 class ProductListView(ListView):
     model = Product
     template_name = 'shop/pages/product_list.html'
     context_object_name = 'products'
-    paginate_by = 12  # Optional: Add pagination
-
-
-    # Optional: Define context data if needed
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
-        context['product_name'] = "Sample Product"
-        context['product_price'] = 100
-
-        return context
-
-
-class OurCompanyPageView(TemplateView):
-    template_name = 'shop/pages/company.html'
+    paginate_by = 12
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -41,36 +32,6 @@ class OurCompanyPageView(TemplateView):
         context['product_price'] = 100
 
         return context
-
-class HomePageView(TemplateView):
-    template_name = 'shop/pages/home.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
-        context['product_name'] = "Sample Product"
-        context['product_price'] = 100
-
-        return context
-
-
-
-
-
-class ContactUsPageView(TemplateView):
-    template_name = 'shop/pages/contact_us.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
-        context['product_name'] = "Sample Product"
-        context['product_price'] = 100
-
-
-        return context
-
-
-
 
 class ProductDetailView(DetailView):
     model = Product
@@ -106,8 +67,19 @@ class ProductDetailView(DetailView):
 
 
 
-class CartPageView(TemplateView):
-    template_name = 'shop/pages/cart.html'
+class OurCompanyPageView(TemplateView):
+    template_name = 'shop/pages/company.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['product_name'] = "Sample Product"
+        context['product_price'] = 100
+
+        return context
+
+class HomePageView(TemplateView):
+    template_name = 'shop/pages/home.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -127,6 +99,64 @@ class AuthPageView(TemplateView):
         context['product_price'] = 100
 
         return context
+
+
+
+class ContactUsPageView(TemplateView):
+    template_name = 'shop/pages/contact_us.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['product_name'] = "Sample Product"
+        context['product_price'] = 100
+
+
+        return context
+
+
+
+
+
+
+
+
+
+
+class CartPageView(TemplateView):
+    template_name = 'shop/pages/cart.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.request.user
+
+        if user.is_authenticated:
+            # Get the active cart for the current user
+            cart = Cart.objects.filter(user=user, is_active=True).first()
+            context['cart'] = cart
+        else:
+            context['cart'] = None
+
+        return context
+
+
+
+
+
+class RemoveCartItemView(View):
+    def post(self, request, item_id):
+        user = request.user
+        if not user.is_authenticated:
+            return JsonResponse({'error': 'Unauthorized'}, status=403)
+
+        # Find the cart item and delete it
+        cart_item = get_object_or_404(CartItem, id=item_id, cart__user=user)
+        cart_item.delete()
+
+        return redirect('cart_page')  # Redirect to the cart page
+
+
+
 
 
 
@@ -154,4 +184,6 @@ class WhyUsPageView(TemplateView):
             review.rating_percentage = (review.rating / 5) * 100
         context['reviews'] = reviews
         return context
+
+
 

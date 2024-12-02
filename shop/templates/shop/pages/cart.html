@@ -1,0 +1,117 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ResetRequest▫️Treat&Tail</title>
+
+    <script src="https://kit.fontawesome.com/cd72f48d0a.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'assets/css/general.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/navbarstyle.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/footerstyle.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/infoblockstyle.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/cart.css' %}">
+    {% include 'shop/modules/_bg.html' %}
+</head>
+<body>
+
+    <div class="bg"></div>
+    <div id="Wrapper" >
+        <div class="cap-box">{% include 'shop/modules/_cap.html' %}</div>
+        <div class="content">
+
+
+            <main class="cart-main-info">
+                {% if cart.items.exists %}
+<table class="cart_table">
+    <thead>
+        <tr>
+            <th>Image</th>
+            <th>Product</th>
+            <th>Flavor</th>
+            <th>Quantity</th>
+            <th>Unit Price</th>
+            <th>Total Price</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in cart.items.all %}
+        <tr>
+            <td>
+                <img class="cart-item-img" src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
+            </td>
+            <td>{{ item.product.name }}</td>
+            <td>
+                {% if item.flavor %}
+                    {{ item.flavor.flavor_name }}
+                {% else %}
+                    No Flavor
+                {% endif %}
+            </td>
+            <td>
+                <div class="quantity-box">
+                    <button class="quantity-btn" data-action="decrease" data-item-id="{{ item.id }}">
+                         <span>-</span>
+                    </button>
+                    <span class="quantity-display" id="quantity-{{ item.id }}">{{ item.quantity }}</span>
+                    <button class="quantity-btn" data-action="increase" data-item-id="{{ item.id }}">
+                        <span>+</span>
+                    </button>
+                </div>
+            </td>
+            <td>
+                {% if item.flavor %}
+                    {{ item.flavor.price }}
+                {% else %}
+                    {{ item.product.price }}
+                {% endif %}
+            </td>
+            <td id="item-total-{{ item.id }}">{{ item.total_price }}</td>
+            <td>
+                <form method="POST" action="{% url 'remove_cart_item' item.id %}">
+                    {% csrf_token %}
+                    <button type="submit">Remove</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="4">Total:</td>
+            <td id="cart-total">{{ cart.total_price }}</td>
+            <td></td>
+        </tr>
+    </tfoot>
+
+</table>
+
+                {% else %}
+                <p>Your cart is empty!</p>
+                {% endif %}
+
+
+
+                <div class="cart-actions">
+                    <a href="{% url 'product_list' %}" class="btn btn-continue">Continue Shopping</a>
+                    <form method="POST" action="{% url 'clear_cart' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-clear">Clear Cart</button>
+                    </form>
+                    <a href="{% url 'home' %}" class="btn btn-checkout">Proceed to Checkout</a>
+                </div>
+
+            </main>
+
+
+
+
+
+        </div>
+    </div>
+
+<script src="{% static 'assets/js/cart.js' %}"></script>
+</body>
+</html>

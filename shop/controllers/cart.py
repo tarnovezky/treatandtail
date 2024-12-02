@@ -1,7 +1,8 @@
+from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from shop.models import Product, Cart, CartItem, ProductFlavor
 
 @csrf_exempt
@@ -53,3 +54,57 @@ def add_to_cart(request):
             return JsonResponse({"error": str(e)}, status=500)
 
     return JsonResponse({"error": "Invalid request method."}, status=400)
+
+
+
+def update_quantity(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        item_id = data.get('item_id')
+        action = data.get('action')
+
+        try:
+            cart_item = get_object_or_404(CartItem, id=item_id, cart__user=request.user)
+
+            if action == 'increase':
+                cart_item.quantity += 1
+            elif action == 'decrease':
+                cart_item.quantity -= 1
+                if cart_item.quantity < 1:
+                    cart_item.delete()
+                    return JsonResponse({
+                        'success': True,
+                        'item_removed': True,
+                        'cart_total_price': cart_item.cart.total_price
+                    })
+
+            cart_item.save()
+
+            return JsonResponse({
+                'success': True,
+                'new_quantity': cart_item.quantity,
+                'item_total_price': cart_item.total_price,
+                'cart_total_price': cart_item.cart.total_price
+            })
+
+        except CartItem.DoesNotExist:
+            return JsonResponse({'success': False, 'error': 'Cart item not found'})
+
+    return JsonResponse({'success': False, 'error': 'Invalid request method'})
+
+
+
+
+
+@login_required
+def clear_cart(request):
+    user = request.user
+    cart = Cart.objects.filter(user=user, is_active=True).first()
+    if cart:
+        cart.items.all().delete()
+    return redirect('cart')
+
+def remove_cart_item(request, item_id):
+    item = get_object_or_404(CartItem, id=item_id)
+    item.delete()
+    return redirect('cart')

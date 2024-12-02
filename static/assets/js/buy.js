@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function addToCart(productId, flavorId, quantity) {
-    const url = '/add_to_cart/';
+    const url = '/cart/add/';
     const data = {
         id: productId,
         flavor: flavorId,

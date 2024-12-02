@@ -22,7 +22,7 @@
 
 body {
     background-color: #FEF9F3; 
-    background-color: rgb(39, 34, 34);
+    background-color: rgba(39, 34, 34, 0);
 }
 
 #Wrapper {
