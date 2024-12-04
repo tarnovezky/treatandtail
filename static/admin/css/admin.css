@@ -1,0 +1,54 @@
+/**** Admin Custom Styles ****/
+
+/* Gray background for Order ID */
+.order-id {
+    background-color: #f0f0f0;
+    padding: 5px 10px;
+    border-radius: 4px;
+}
+
+/* Shortened date formatting */
+.short-date {
+    font-family: monospace;
+}
+
+/* Status variations */
+.status-unpaid {
+    background-color: #ffc107;
+    color: black;
+    font-weight: bold;
+}
+.status-new {
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+}
+.status-processing {
+    background-color: #17a2b8;
+    color: white;
+    font-weight: bold;
+}
+.status-completed {
+    background-color: #28a745;
+    color: white;
+    font-weight: bold;
+}
+.status-canceled {
+    background-color: #dc3545;
+    color: white;
+    font-weight: bold;
+}
+
+/* Button styling */
+.view-button {
+    background-color: #007bff;
+    color: white;
+    border: 1px solid #007bff;
+    padding: 5px 10px;
+    border-radius: 4px;
+    text-decoration: none;
+}
+.view-button:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}

@@ -1,0 +1,43 @@
+<form id="checkoutForm" method="POST">
+    <textarea name="shipping_address" placeholder="Enter your address" required></textarea>
+    <select name="shipping_type" required>
+        <option value="STANDARD">Standard</option>
+        <option value="EXPRESS">Express</option>
+        <option value="PICKUP">On-hand in Shop</option>
+    </select>
+    <input type="text" name="coupon" placeholder="Coupon Code (optional)">
+    <textarea name="comment" placeholder="Additional Comments"></textarea>
+    <button type="button" id="submitOrder">Place Order</button>
+</form>
+
+<script>
+    document.getElementById('submitOrder').addEventListener('click', function () {
+        const form = document.getElementById('checkoutForm');
+        const formData = new FormData(form);
+
+        const data = {};
+        formData.forEach((value, key) => {
+            data[key] = value;
+        });
+
+        fetch("{% url 'checkout' %}", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: JSON.stringify(data),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                alert(`Order placed successfully! Order Number: ${data.order_number}`);
+            } else {
+                alert(`Error: ${data.message}`);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    });
+</script>

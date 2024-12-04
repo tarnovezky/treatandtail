@@ -225,17 +225,32 @@ class CartItem(models.Model):
 
 class Order(models.Model):
     STATUS_CHOICES = [
+        ('UNPAID', 'Unpaid'),
         ('NEW', 'New'),
         ('PROCESSING', 'Processing'),
         ('COMPLETED', 'Completed'),
         ('CANCELED', 'Canceled'),
     ]
 
+    SHIPPING_CHOICES = [
+        ('STANDARD', 'Standard'),
+        ('EXPRESS', 'Express'),
+        ('PICKUP', 'On-hand in Shop'),
+    ]
+
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="orders", verbose_name="User")
     order_number = models.CharField(max_length=36, unique=True, verbose_name="Order Identifier")
     order_date = models.DateTimeField(auto_now_add=True, verbose_name="Order Date")
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='NEW', verbose_name="Order Status")
+    status = models.CharField(
+        max_length=20,
+        choices=STATUS_CHOICES,
+        default='UNPAID',  # Default set to 'UNPAID'
+        verbose_name="Order Status"
+    )
     total_price = models.DecimalField(max_digits=9, decimal_places=2, verbose_name="Total Price")
+    shipping_address = models.TextField(verbose_name="Shipping Address", null=True, blank=True)
+    shipping_type = models.CharField(max_length=20, choices=SHIPPING_CHOICES, default='STANDARD', verbose_name="Shipping Type")
+    coupon = models.CharField(max_length=50, null=True, blank=True, verbose_name="Coupon")
 
     class Meta:
         verbose_name = "Order"
@@ -244,9 +259,18 @@ class Order(models.Model):
     def __str__(self):
         return f"Order ({self.order_number}) for {self.user.username} - {self.status}"
 
+
+
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="items", verbose_name="Order")
     product = models.ForeignKey('Product', on_delete=models.CASCADE, related_name="order_items", verbose_name="Product")
+    flavor = models.ForeignKey(
+        ProductFlavor,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="Selected Flavor"
+    )
     quantity = models.PositiveIntegerField(default=1, verbose_name="Quantity")
     price = models.DecimalField(max_digits=9, decimal_places=2, verbose_name="Unit Price")
 
@@ -255,7 +279,8 @@ class OrderItem(models.Model):
         verbose_name_plural = "Order Items"
 
     def __str__(self):
-        return f"{self.quantity} x {self.product.name} in Order ({self.order.id})"
+        flavor_text = f" ({self.flavor.flavor_name})" if self.flavor else ""
+        return f"{self.quantity} x {self.product.name}{flavor_text} in Order ({self.order.id})"
 
     @property
     def total_price(self):

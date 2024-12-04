@@ -1,7 +1,7 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
 from .views import (
-    ProductPageView, OurCompanyPageView, ContactUsPageView, ProductListView,
+    ProductPageView, OurCompanyPageView, ContactUsPageView, ProductListView, CheckoutPageView,
     WhyUsPageView, CartPageView, ProductDetailView, AuthPageView, HomePageView)
 
 from shop.controllers.auth import AuthController
@@ -13,6 +13,7 @@ urlpatterns = [
     path('cart/remove/<int:item_id>/', remove_cart_item, name='remove_cart_item'),
     path('cart/update_quantity/', update_quantity, name='update_quantity'),
     path('cart/clear/', clear_cart, name='clear_cart'),
+    path('checkout/', CheckoutPageView.as_view(), name='checkout'),
 
 
     path('', HomePageView.as_view(), name='home'),

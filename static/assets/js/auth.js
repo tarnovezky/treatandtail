@@ -21,16 +21,18 @@ registr = document.getElementById("registr");
 
 remember = document.getElementById("remembercheckbox");
 
+let invert = -1;
+
 login.style.marginLeft = "0%";
-registr.style.marginLeft = "-100%";
+registr.style.marginLeft = -100 * invert + "%";
 bar.style.width = "31%";
 bar.style.marginLeft = "0%";
 
 regbtt.addEventListener("click", () => {if(currentbtt == 0) {currentbtt = 2; tweenService.tween(bar, tweenService.createParam([["marginLeft", 39, "%"],["width", 54, "%"]]), 100, "linear");
     tweenService.tween(registr, tweenService.createParam([["marginLeft", 0, "%"]]), 100, "linear");
-    tweenService.tween(login, tweenService.createParam([["marginLeft", 100, "%"]]), 100, "linear"); currentbtt = 1;}})
+    tweenService.tween(login, tweenService.createParam([["marginLeft", invert * 100, "%"]]), 100, "linear"); currentbtt = 1;}})
 signbtt.addEventListener("click", () => {if(currentbtt == 1) {currentbtt = 2; tweenService.tween(bar, tweenService.createParam([["marginLeft", 0, "%"],["width", 31, "%"]]), 100, "linear");
-    tweenService.tween(registr, tweenService.createParam([["marginLeft", -100, "%"]]), 100, "linear");
+    tweenService.tween(registr, tweenService.createParam([["marginLeft", invert * -100, "%"]]), 100, "linear");
     tweenService.tween(login, tweenService.createParam([["marginLeft", 0, "%"]]), 100, "linear"); currentbtt = 0;}})
 
 remember.addEventListener("click", () => {

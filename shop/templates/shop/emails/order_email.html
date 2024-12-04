@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Order Confirmation</title>
+    <style>
+        /* General email styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+        }
+        .email-container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        .header {
+            background-color: #ef7a3b;
+            color: #ffffff;
+            padding: 20px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .body {
+            padding: 20px;
+            color: #333333;
+        }
+        .body h2 {
+            font-size: 20px;
+            color: #ef7a3b;
+        }
+        .body p {
+            font-size: 16px;
+            line-height: 1.5;
+            margin: 10px 0;
+        }
+        .body .order-details {
+            margin: 20px 0;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+        }
+        .body .order-details p {
+            margin: 5px 0;
+        }
+        .body .order-items table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .body .order-items table th, .body .order-items table td {
+            border: 1px solid #e0e0e0;
+            padding: 8px;
+            text-align: left;
+        }
+        .body .order-items table th {
+            background-color: #ef7a3b;
+            color: #ffffff;
+        }
+        .footer {
+            background-color: #f1f1f1;
+            color: #888888;
+            text-align: center;
+            padding: 10px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <!-- Header Section -->
+        <div class="header">
+            Order Confirmation
+        </div>
+
+        <!-- Body Section -->
+        <div class="body">
+            <h2>Hi {{ cart.user.first_name }},</h2>
+            <p>Thank you for your order! Here are the details of your purchase:</p>
+
+            <!-- Order Details -->
+            <div class="order-details">
+                <p><strong>Order ID:</strong> {{ short_id }}</p>
+                <p><strong>Order Date:</strong> {{ order_time }}</p>
+                <p><strong>Total Price:</strong> {{ cart.total_price }} ₴</p>
+            </div>
+
+            <!-- Order Items -->
+            <div class="order-items">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Product</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in items %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ item.product }}</td>
+                            <td>{{ item.quantity }}</td>
+                            <td>{{ item.product.price }} ₴</td>
+                            <td>{{ item.price }} ₴</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <p>If you have any questions or concerns, feel free to contact us at <strong>sheriffresto@ukr.net</strong>.</p>
+            <p>Thank you for shopping with us!</p>
+        </div>
+
+        <!-- Footer Section -->
+        <div class="footer">
+            &copy; 2024 Resttoria. All rights reserved.
+        </div>
+    </div>
+</body>
+</html>

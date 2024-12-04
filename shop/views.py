@@ -9,6 +9,9 @@ from django.shortcuts import get_object_or_404
 import json
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
+from django.views.generic import TemplateView
+from django.http import JsonResponse
+from shop.services.order import OrderService
 
 class ProductPageView(TemplateView):
     template_name = 'shop/pages/product.html'
@@ -157,23 +160,6 @@ class RemoveCartItemView(View):
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 class WhyUsPageView(TemplateView):
     template_name = 'shop/pages/why_us.html'
 
@@ -186,4 +172,46 @@ class WhyUsPageView(TemplateView):
         return context
 
 
+
+
+
+
+
+
+
+from django.views.generic import TemplateView
+from django.http import JsonResponse
+from .services.order import OrderService
+
+import logging
+
+logger = logging.getLogger(__name__)
+
+class CheckoutPageView(TemplateView):
+    template_name = 'shop/pages/checkout.html'
+
+    def get_context_data(self, **kwargs):
+        logger.info("Rendering checkout page.")
+        context = super().get_context_data(**kwargs)
+        context['shipping_options'] = [
+            {'value': 'STANDARD', 'label': 'Standard'},
+            {'value': 'EXPRESS', 'label': 'Express'},
+            {'value': 'PICKUP', 'label': 'On-hand in Shop'},
+        ]
+        logger.debug(f"Checkout page context: {context}")
+        return context
+
+    def post(self, request, *args, **kwargs):
+        logger.info("Received POST request for checkout.")
+        try:
+            order_service = OrderService(request)
+            order = order_service.create_order()
+            if order:
+                logger.info(f"Order created successfully: {order.order_number}")
+                return JsonResponse({'status': 'success', 'order_number': order.order_number})
+            logger.warning("Order creation failed.")
+            return JsonResponse({'status': 'error', 'message': 'Failed to place order.'})
+        except Exception as e:
+            logger.error(f"Error during checkout: {e}", exc_info=True)
+            return JsonResponse({'status': 'error', 'message': str(e)})
 

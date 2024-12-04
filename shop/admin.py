@@ -3,6 +3,7 @@ from django.urls import reverse
 from django.utils.html import format_html
 from unfold.admin import ModelAdmin
 
+from . import models
 from .models import (
     UserAdditionalInfo,
     CallRequest,
@@ -86,21 +87,58 @@ class SubscriptionAdmin(ModelAdmin):
 
 @admin.register(Cart)
 class CartAdmin(ModelAdmin):
-    list_display = ['user', 'get_cart_id', 'total_price', 'view_cart_items']
+    list_display = [
+        'short_cart_id_button',
+        'user',
+        'formatted_created_at',
+        'status_with_background',
+        'total_price',
+        'view_cart_items'
+    ]
     search_fields = ['id', 'user__username']
     list_filter = ['is_active', 'created_at']
+    actions = ['mark_as_active', 'mark_as_inactive']
 
-    def get_cart_id(self, obj):
-        url = reverse('admin:shop_cart_change', args=[obj.id])
-        return format_html(f'<a href="{url}" class="button">{str(obj.id)[:13]}</a>')
+    def short_cart_id_button(self, obj):
+        short_cart_id = str(obj.id)[:13]  # Get the first 13 characters of the Cart ID
+        url = reverse('admin:shop_cart_change', args=[obj.id])  # Generate admin change URL
+        return format_html(
+            f'<a href="{url}" class="button" style="background-color: #8A8A8AFF; color: black; padding: 5px 10px; border-radius: 3px;">{short_cart_id}</a>'
+        )
+    short_cart_id_button.short_description = 'Cart ID'
 
-    get_cart_id.short_description = 'Cart ID'
+    def formatted_created_at(self, obj):
+        return obj.created_at.strftime('%d:%m:%y | %H:%M')
+    formatted_created_at.short_description = 'Created At'
+
+    def status_with_background(self, obj):
+        color_map = {
+            True: 'green',   # Active carts
+            False: 'gray'    # Inactive carts
+        }
+        color = color_map.get(obj.is_active, 'black')
+        status_display = 'Active' if obj.is_active else 'Inactive'
+        return format_html(
+            f'<span style="background-color: {color}; color: white; padding: 5px; border-radius: 3px;">{status_display}</span>'
+        )
+    status_with_background.short_description = 'Status'
 
     def view_cart_items(self, obj):
-        url = reverse('admin:shop_cartitem_changelist')
-        return format_html(f'<a href="{url}?cart__id__exact={obj.id}" class="button">View</a>')
-
+        url = reverse('admin:shop_cartitem_changelist') + f'?cart__id__exact={obj.id}'
+        return format_html(
+            f'<a href="{url}" class="button" style="background-color: #007BFF; color: white; padding: 5px 10px; border-radius: 3px;">View Items</a>'
+        )
     view_cart_items.short_description = 'Cart Items'
+
+    def mark_as_active(self, request, queryset):
+        queryset.update(is_active=True)
+        self.message_user(request, "Selected carts have been marked as active.")
+    mark_as_active.short_description = "Mark as Active"
+
+    def mark_as_inactive(self, request, queryset):
+        queryset.update(is_active=False)
+        self.message_user(request, "Selected carts have been marked as inactive.")
+    mark_as_inactive.short_description = "Mark as Inactive"
 
 
 @admin.register(CartItem)
@@ -112,42 +150,99 @@ class CartItemAdmin(ModelAdmin):
     get_flavor.short_description = "Flavor"
 
 
+
+
+
+
 @admin.register(Order)
 class OrderAdmin(ModelAdmin):
-    list_display = ['id', 'user', 'get_order_number_button', 'order_date', 'status', 'view_order_items']
+    list_display = [
+        'short_order_number_button',
+        'user',
+        'formatted_order_date',
+        'status_with_background',
+        'total_price',
+        'view_order_items'
+    ]
     search_fields = ['id', 'user__username', 'order_number']
     list_filter = ['status', 'order_date']
+    actions = ['mark_as_completed', 'mark_as_canceled']
 
-    def get_order_number_button(self, obj):
-        url = reverse('admin:shop_order_change', args=[obj.id])
-        return format_html(f'<a href="{url}" class="button">{obj.order_number[:13]}</a>')
+    def short_order_number_button(self, obj):
+        short_order_number = obj.order_number[:13]  # Get the first 13 characters
+        url = reverse('admin:shop_order_change', args=[obj.id])  # Generate admin change URL
+        return format_html(
+            f'<a href="{url}" class="button" style="background-color: #8A8A8AFF; color: black; padding: 5px 10px; border-radius: 3px;">{short_order_number}</a>'
+        )
+    short_order_number_button.short_description = 'Order Identifier'
 
-    get_order_number_button.short_description = 'Order Identifier'
+    def formatted_order_date(self, obj):
+        return obj.order_date.strftime('%d:%m:%y | %H:%M')
+    formatted_order_date.short_description = 'Order Date'
+
+    def status_with_background(self, obj):
+        color_map = {
+            'UNPAID': 'gray',
+            'NEW': 'blue',
+            'PROCESSING': 'orange',
+            'COMPLETED': 'green',
+            'CANCELED': 'red'
+        }
+        color = color_map.get(obj.status, 'black')
+        return format_html(
+            f'<span style="background-color: {color}; color: white; padding: 5px; border-radius: 3px;">{obj.get_status_display()}</span>'
+        )
+    status_with_background.short_description = 'Status'
 
     def view_order_items(self, obj):
-        url = reverse('admin:shop_orderitem_changelist')
-        return format_html(f'<a href="{url}?order__id__exact={obj.id}" class="button">View</a>')
-
+        url = reverse('admin:shop_orderitem_changelist') + f'?order__id__exact={obj.id}'
+        return format_html(
+            f'<a href="{url}" class="button" style="background-color: #007BFF; color: white; padding: 5px 10px; border-radius: 3px;">View Items</a>'
+        )
     view_order_items.short_description = 'Order Items'
-
-    actions = ['mark_as_completed', 'mark_as_canceled']
 
     def mark_as_completed(self, request, queryset):
         queryset.update(status='COMPLETED')
         self.message_user(request, "Selected orders have been marked as completed.")
+    mark_as_completed.short_description = "Mark as Completed"
 
     def mark_as_canceled(self, request, queryset):
         queryset.update(status='CANCELED')
         self.message_user(request, "Selected orders have been marked as canceled.")
-
-    mark_as_completed.short_description = "Mark as Completed"
     mark_as_canceled.short_description = "Mark as Canceled"
+
+
 
 
 @admin.register(OrderItem)
 class OrderItemAdmin(ModelAdmin):
-    list_display = ['product', 'quantity', 'price', 'order']
+    list_display = [
+
+        'get_product_name',
+        'get_flavor',
+        'price',
+        'quantity',
+        'get_total_price',
+        'get_username'
+    ]
     search_fields = ['product__name', 'order__id']
+
+    def get_product_name(self, obj):
+        return obj.product.name
+    get_product_name.short_description = "Product Name"
+
+    def get_flavor(self, obj):
+        return obj.flavor.flavor_name if obj.flavor else "No Flavor"
+    get_flavor.short_description = "Flavor"
+
+    def get_total_price(self, obj):
+        return obj.total_price
+    get_total_price.short_description = "Total Price"
+
+    def get_username(self, obj):
+        return obj.order.user.username
+    get_username.short_description = "Username"
+
 
 
 @admin.register(Review)
