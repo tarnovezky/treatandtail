@@ -1,43 +1,73 @@
-<form id="checkoutForm" method="POST">
-    <textarea name="shipping_address" placeholder="Enter your address" required></textarea>
-    <select name="shipping_type" required>
-        <option value="STANDARD">Standard</option>
-        <option value="EXPRESS">Express</option>
-        <option value="PICKUP">On-hand in Shop</option>
-    </select>
-    <input type="text" name="coupon" placeholder="Coupon Code (optional)">
-    <textarea name="comment" placeholder="Additional Comments"></textarea>
-    <button type="button" id="submitOrder">Place Order</button>
-</form>
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ResetRequest ▫️ Treat&Tail</title>
 
-<script>
-    document.getElementById('submitOrder').addEventListener('click', function () {
-        const form = document.getElementById('checkoutForm');
-        const formData = new FormData(form);
+    <!-- FontAwesome for icons -->
+    <script src="https://kit.fontawesome.com/cd72f48d0a.js" crossorigin="anonymous"></script>
 
-        const data = {};
-        formData.forEach((value, key) => {
-            data[key] = value;
-        });
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="{% static 'assets/css/general.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/navbarstyle.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/footerstyle.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/infoblockstyle.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/checkout.css' %}">
+    {% include 'shop/modules/_bg.html' %}
+</head>
+<body>
+    <div class="bg"></div>
+    <div id="Wrapper">
+        <header class="cap-box">{% include 'shop/modules/_cap.html' %}</header>
+        <div class="content">
+            <section class="checkout-area">
 
-        fetch("{% url 'checkout' %}", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': '{{ csrf_token }}'
-            },
-            body: JSON.stringify(data),
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'success') {
-                alert(`Order placed successfully! Order Number: ${data.order_number}`);
-            } else {
-                alert(`Error: ${data.message}`);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-    });
-</script>
+
+
+                <main class="checkout-main-info">
+
+                    <h2 class="checkout-title">Checkout</h2>
+                    <form id="checkoutForm" method="POST" class="checkout-form">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="shipping_address">Shipping Address</label>
+                            <textarea id="shipping_address" name="shipping_address" placeholder="Enter your address" required></textarea>
+                        </div>
+                        <hr>
+                        <div class="form-group">
+                            <label for="shipping_type">Shipping Type</label>
+                            <select id="shipping_type" name="shipping_type"  required>
+                                <option class="dropdown-shipping" value="STANDARD">Standard</option>
+                                <option class="dropdown-shipping" value="EXPRESS">Express</option>
+                                <option class="dropdown-shipping" value="PICKUP">On-hand in Shop</option>
+                            </select>
+                        </div>
+                        <hr>
+                        <div class="form-group">
+                            <label for="coupon">Coupon Code</label>
+                            <input id="coupon" type="text" name="coupon" placeholder="Enter coupon code (optional)">
+                        </div>
+                        <hr>
+                        <div class="form-group">
+                            <label for="comment">Additional Comments</label>
+                            <textarea id="comment" name="comment" placeholder="Add any comments"></textarea>
+                        </div>
+                        <hr>
+                        <div class="checkout-actions">
+                            <button type="submit" id="submitOrder" class="submit-button">Place Order</button>
+                        </div>
+                    </form>
+                </main>
+
+
+
+            </section>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="{% static 'assets/js/checkout.js' %}"></script>
+</body>
+</html>

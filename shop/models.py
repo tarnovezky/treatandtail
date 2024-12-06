@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
@@ -35,6 +36,10 @@ class Tag(models.Model):
         verbose_name = "Tag"
         verbose_name_plural = "Tags"
 
+    def clean(self):
+        if not self.name.strip():
+            raise ValidationError("Tag name cannot be empty.")
+
     def __str__(self):
         return self.name
 
@@ -69,6 +74,10 @@ class Product(models.Model):
     class Meta:
         verbose_name = "Product"
         verbose_name_plural = "Products"
+
+    def clean(self):
+        if self.rating is not None and not (0 <= self.rating <= 5):
+            raise ValidationError({"rating": _("Rating must be between 0 and 5.")})
 
     def get_absolute_url(self):
         return reverse('buy_now', kwargs={'slug': self.slug})
@@ -122,6 +131,10 @@ class Comment(models.Model):
         verbose_name_plural = "Comments"
         ordering = ['-time']
 
+    def clean(self):
+        if not self.user or not self.product:
+            raise ValidationError(_("Comment must be linked to a user and product."))
+
     def __str__(self):
         return f"Comment by {self.user.username} on {self.product.name}"
 
@@ -140,6 +153,12 @@ class Review(models.Model):
     )
     date_created = models.DateTimeField(auto_now_add=True, editable=False, verbose_name="Date Created")
     last_edited = models.DateTimeField(auto_now=True, verbose_name="Last Edited")
+
+    def clean(self):
+        if not self.images:
+            raise ValidationError({"images": _("Image is required for a review.")})
+        if self.rating is not None and not (0 <= self.rating <= 5):
+            raise ValidationError({"rating": _("Rating must be between 0 and 5.")})
 
     def save(self, *args, **kwargs):
         if not self.pk and not self.created_by:
@@ -188,6 +207,10 @@ class Cart(models.Model):
     def short_id(self):
         return f" {str(self.id)[:13]}"
 
+    def save(self, *args, **kwargs):
+        if self.is_active:
+            Cart.objects.filter(user=self.user, is_active=True).update(is_active=False)
+        super().save(*args, **kwargs)
 
     @property
     def total_price(self):
@@ -213,12 +236,15 @@ class CartItem(models.Model):
         verbose_name = "Cart Item"
         verbose_name_plural = "Cart Items"
 
-    def __str__(self):
-        return f"{self.quantity} x {self.product.name} ({self.flavor.flavor_name if self.flavor else 'No Flavor'}) in Cart ({self.cart.id})"
+    def clean(self):
+        if not self.flavor:
+            raise ValidationError({"flavor": _("A flavor must be selected.")})
 
     @property
     def total_price(self):
         return (self.flavor.price if self.flavor else self.product.price) * self.quantity
+    def __str__(self):
+        return f"{self.quantity} x {self.product.name} ({self.flavor.flavor_name if self.flavor else 'No Flavor'}) in Cart ({self.cart.id})"
 
 
 
@@ -255,6 +281,11 @@ class Order(models.Model):
     class Meta:
         verbose_name = "Order"
         verbose_name_plural = "Orders"
+
+    def clean(self):
+        calculated_total = sum(item.price * item.quantity for item in self.items.all())
+        if self.total_price != calculated_total:
+            raise ValidationError({"total_price": _("Total price does not match the sum of order items.")})
 
     def __str__(self):
         return f"Order ({self.order_number}) for {self.user.username} - {self.status}"

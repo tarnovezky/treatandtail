@@ -1,5 +1,4 @@
 from pathlib import Path
-
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-1i=kehbsng&&2u@*wa4x7vg7_nd=^o^7s(!kpb6cyi6$(z)^^9'
@@ -44,6 +43,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
 ]
+
 
 ROOT_URLCONF = 'treatandtail.urls'
 
