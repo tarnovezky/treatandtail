@@ -77,14 +77,21 @@
             </td>
         </tr>
         {% endfor %}
+
     </tbody>
-    <tfoot>
-        <tr>
-            <td colspan="4">Total:</td>
-            <td id="cart-total">{{ cart.total_price }}</td>
-            <td></td>
-        </tr>
-    </tfoot>
+
+
+<tfoot>
+    <tr>
+        <td colspan="7" style="text-align: right; font-weight: bold; padding-right: 20px;">
+            <span class="total-label" style="margin-right: 10px;">Total:</span>
+            <span class="total-price">{{ cart.total_price }}</span>
+        </td>
+    </tr>
+</tfoot>
+
+
+
 
 </table>
 
@@ -100,7 +107,7 @@
                         {% csrf_token %}
                         <button type="submit" class="btn btn-clear">Clear Cart</button>
                     </form>
-                    <a href="{% url 'home' %}" class="btn btn-checkout">Proceed to Checkout</a>
+                    <a href="{% url 'checkout' %}" class="btn btn-checkout">Proceed to Checkout</a>
                 </div>
 
             </main>

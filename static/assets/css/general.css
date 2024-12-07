@@ -38,6 +38,7 @@ body {
     width: 100%;
     justify-content: space-between;
     align-items: center;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important; /* Creates a subtle shadow */
 }
 
 #bg {
@@ -52,4 +53,9 @@ body {
 
     background-size: 98%;
     filter: blur(10px);
+}
+.cap-box{
+    width: 103vw;
+    left: 0;
+    margin-left: -15%;
 }

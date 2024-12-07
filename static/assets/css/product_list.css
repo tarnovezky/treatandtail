@@ -10,8 +10,21 @@ body {
     margin: 0 auto;
     padding: 20px;
 }
+nav {
+    display: flex;
+    justify-content: center; /* Center the navigation links */
+    gap: 20px; /* Add spacing between navigation links */
+    padding: 10px 0 !important;
+}
 #Header {
-  margin-top: -20px !important;
+    margin-top: -20px !important;
+    width: 100%; /* Make the header span the full width */
+    margin: 0; /* Remove any margin */
+    padding: 0; /* Remove any padding */
+    position: relative; /* Keep relative positioning */
+    background-color: rgba(254, 249, 243, 1); /* Optional: Add a background color if needed */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow for better visibility */
+    z-index: 10; /* Ensure it appears above other elements */
 }
 
 #Footer {

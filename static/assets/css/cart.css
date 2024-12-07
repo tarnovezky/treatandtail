@@ -1,8 +1,11 @@
 #Header {
     background-color: rgba(254, 249, 243, 1) !important;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     position: fixed !important;
     top: 0 !important;
     left: 0 !important;
+
+    z-index: 10; /* Makes sure it appears above other elements */
 }
 
 .bg {
@@ -179,12 +182,12 @@
 }
 
 .btn-continue {
-    background-color: #007bff;
+    background-color: #ef7a3b;
     color: #fff;
 }
 
 .btn-continue:hover {
-    background-color: #0056b3;
+    background-color: #d96e35;
 }
 
 .btn-clear {
@@ -209,3 +212,16 @@
   display: flex;
   justify-content: center;
 }
+
+
+
+.total-label {
+    margin-right: 10px; /* Adds spacing between the label and the price */
+}
+
+.cart_table tfoot td {
+    text-align: right; /* Align the content to the right */
+    padding-right: 14vw !important ; /* Adds padding to the right end of the footer cell */
+    font-weight: bold; /* Ensures the text appears bold */
+}
+

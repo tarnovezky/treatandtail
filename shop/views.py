@@ -132,15 +132,16 @@ class CartPageView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         user = self.request.user
+        session_key = self.request.session.session_key
 
         if user.is_authenticated:
-            # Get the active cart for the current user
             cart = Cart.objects.filter(user=user, is_active=True).first()
-            context['cart'] = cart
         else:
-            context['cart'] = None
+            cart = Cart.objects.filter(session_key=session_key, is_active=True).first()
 
+        context['cart'] = cart
         return context
+
 
 
 
@@ -214,4 +215,21 @@ class CheckoutPageView(TemplateView):
         except Exception as e:
             logger.error(f"Error during checkout: {e}", exc_info=True)
             return JsonResponse({'status': 'error', 'message': str(e)})
+
+
+
+
+
+
+from django.contrib.auth.signals import user_logged_in
+from django.dispatch import receiver
+from shop.controllers.cart import CartManager
+
+@receiver(user_logged_in)
+def merge_carts_on_login(sender, request, user, **kwargs):
+    """
+    Merge the session cart into the user's cart after login.
+    """
+    manager = CartManager(request)
+    manager.merge_carts()
 

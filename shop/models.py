@@ -192,23 +192,34 @@ class Subscription(models.Model):
 
 
 
+
+
 class Cart(models.Model):
-    id = models.UUIDField(default=uuid.uuid4, primary_key=True, max_length=10)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="carts", verbose_name="User")
+    id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="carts",
+        verbose_name="User",
+        null=True,
+        blank=True  # Allow null values for guest users
+    )
+    session_key = models.CharField(max_length=40, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Created At")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Last Updated")
     is_active = models.BooleanField(default=True, verbose_name="Active")
 
     @property
     def num_of_items(self):
-        cartitems = self.cartitems.all()
-        quantity = sum([item.quantity for item in cartitems])
-        return quantity
+        cartitems = self.items.all()
+        return sum(item.quantity for item in cartitems)
+
     def short_id(self):
         return f" {str(self.id)[:13]}"
 
     def save(self, *args, **kwargs):
-        if self.is_active:
+        # Deactivate other carts only for authenticated users
+        if self.user:
             Cart.objects.filter(user=self.user, is_active=True).update(is_active=False)
         super().save(*args, **kwargs)
 
@@ -221,7 +232,11 @@ class Cart(models.Model):
         verbose_name_plural = "Carts"
 
     def __str__(self):
-        return f"Cart ({self.id}) for {self.user.username}"
+        if self.user:
+            return f"Cart ({self.id}) for {self.user.username}"
+        return f"Cart ({self.id}) for session {self.session_key}"
+
+
 
 
 
@@ -236,16 +251,13 @@ class CartItem(models.Model):
         verbose_name = "Cart Item"
         verbose_name_plural = "Cart Items"
 
-    def clean(self):
-        if not self.flavor:
-            raise ValidationError({"flavor": _("A flavor must be selected.")})
+
 
     @property
     def total_price(self):
         return (self.flavor.price if self.flavor else self.product.price) * self.quantity
     def __str__(self):
         return f"{self.quantity} x {self.product.name} ({self.flavor.flavor_name if self.flavor else 'No Flavor'}) in Cart ({self.cart.id})"
-
 
 
 
@@ -289,6 +301,7 @@ class Order(models.Model):
 
     def __str__(self):
         return f"Order ({self.order_number}) for {self.user.username} - {self.status}"
+
 
 
 
