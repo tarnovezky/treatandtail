@@ -276,31 +276,31 @@ class Order(models.Model):
         ('PICKUP', 'On-hand in Shop'),
     ]
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="orders", verbose_name="User")
-    order_number = models.CharField(max_length=36, unique=True, verbose_name="Order Identifier")
-    order_date = models.DateTimeField(auto_now_add=True, verbose_name="Order Date")
-    status = models.CharField(
-        max_length=20,
-        choices=STATUS_CHOICES,
-        default='UNPAID',  # Default set to 'UNPAID'
-        verbose_name="Order Status"
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="orders", verbose_name="User", null=True, blank=True
     )
-    total_price = models.DecimalField(max_digits=9, decimal_places=2, verbose_name="Total Price")
-    shipping_address = models.TextField(verbose_name="Shipping Address", null=True, blank=True)
+    name = models.CharField(max_length=255, default="Guest", verbose_name="Name")
+
+    email = models.EmailField(verbose_name="Email Address", null=True, blank=True)
+
+    shipping_address = models.TextField(default="Not provided", verbose_name="Shipping Address")
+
     shipping_type = models.CharField(max_length=20, choices=SHIPPING_CHOICES, default='STANDARD', verbose_name="Shipping Type")
     coupon = models.CharField(max_length=50, null=True, blank=True, verbose_name="Coupon")
+    order_number = models.CharField(max_length=36, unique=True, verbose_name="Order Identifier")
+    order_date = models.DateTimeField(auto_now_add=True, verbose_name="Order Date")
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='UNPAID', verbose_name="Order Status")
+    total_price = models.DecimalField(max_digits=9, decimal_places=2, verbose_name="Total Price")
 
     class Meta:
         verbose_name = "Order"
         verbose_name_plural = "Orders"
 
-    def clean(self):
-        calculated_total = sum(item.price * item.quantity for item in self.items.all())
-        if self.total_price != calculated_total:
-            raise ValidationError({"total_price": _("Total price does not match the sum of order items.")})
-
     def __str__(self):
-        return f"Order ({self.order_number}) for {self.user.username} - {self.status}"
+        if self.user:
+            return f"Order ({self.order_number}) for {self.user.username} - {self.status}"
+        return f"Order ({self.order_number}) for {self.name} - {self.status}"
+
 
 
 

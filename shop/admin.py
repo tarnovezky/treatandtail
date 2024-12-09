@@ -240,9 +240,11 @@ class OrderItemAdmin(ModelAdmin):
     get_total_price.short_description = "Total Price"
 
     def get_username(self, obj):
-        return obj.order.user.username
-    get_username.short_description = "Username"
+        if obj.order.user:
+            return obj.order.user.username
+        return "Guest"
 
+    get_username.short_description = "Username"
 
 
 @admin.register(Review)

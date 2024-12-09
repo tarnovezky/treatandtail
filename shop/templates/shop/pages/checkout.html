@@ -29,20 +29,15 @@
                         {% csrf_token %}
 
                         {% if not user.is_authenticated %}
-                        <div class="form-group">
-                            <label for="name">Full Name</label>
-                            <input id="name" type="text" name="name" placeholder="Enter your full name" value="{{ user.get_full_name }}" required>
-                        </div>
+                            <div class="form-group">
+                                <label for="name">Full Name</label>
+                                <input id="name" type="text" name="name" placeholder="Enter your full name" required>
+                            </div>
                             <hr>
-                        <div class="form-group">
-                            <label for="email">Email Address</label>
-                            <input id="email" type="email" name="email" placeholder="Enter your email" value="{{ user.email }}" required>
-                        </div>
-                            <hr>
-                        <div class="form-group">
-                            <label for="phone_number">Phone Number</label>
-                            <input id="phone_number" type="tel" name="phone_number" placeholder="Enter your phone number" required>
-                        </div>
+                            <div class="form-group">
+                                <label for="email">Email Address</label>
+                                <input id="email" type="email" name="email" placeholder="Enter your email" required>
+                            </div>
                             <hr>
                         {% endif %}
 
@@ -54,9 +49,10 @@
                         <div class="form-group">
                             <label for="shipping_type">Shipping Type</label>
                             <select id="shipping_type" name="shipping_type" required>
-                                <option class="dropdown-shipping" value="STANDARD">Standard</option>
-                                <option class="dropdown-shipping" value="EXPRESS">Express</option>
-                                <option class="dropdown-shipping" value="PICKUP">On-hand in Shop</option>
+                                <option value="" disabled selected>Select a shipping type</option>
+                                <option value="STANDARD">Standard</option>
+                                <option value="EXPRESS">Express</option>
+                                <option value="PICKUP">On-hand in Shop</option>
                             </select>
                         </div>
                         <hr>
@@ -71,7 +67,7 @@
                         </div>
                         <hr>
                         <div class="checkout-actions">
-                            <button type="submit" id="submitOrder" class="submit-button">Place Order</button>
+                            <button type="button" id="submitOrder" class="submit-button">Place Order</button>
                         </div>
                     </form>
                 </main>
@@ -79,7 +75,42 @@
         </div>
     </div>
 
+
     <!-- JavaScript -->
-    <script src="{% static 'assets/js/checkout.js' %}"></script>
+    <script>
+        document.getElementById('submitOrder').addEventListener('click', function (event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const form = document.getElementById('checkoutForm');
+            const formData = new FormData(form);
+
+            const data = {};
+            formData.forEach((value, key) => {
+                data[key] = value;
+            });
+
+            fetch("{% url 'checkout' %}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    alert(`Order placed successfully! Order Number: ${data.order_number}`);
+                    window.location.href = "/"; // Redirect to home or success page
+                } else {
+                    alert(`Error: ${data.message}`);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An unexpected error occurred.');
+            });
+        });
+    </script>
 </body>
 </html>

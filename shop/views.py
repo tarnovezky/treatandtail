@@ -179,12 +179,11 @@ class WhyUsPageView(TemplateView):
 
 
 
-
-from django.views.generic import TemplateView
-from django.http import JsonResponse
-from .services.order import OrderService
-
+import json
 import logging
+from django.http import JsonResponse
+from django.views.generic import TemplateView
+from shop.services.order import OrderService
 
 logger = logging.getLogger(__name__)
 
@@ -192,6 +191,9 @@ class CheckoutPageView(TemplateView):
     template_name = 'shop/pages/checkout.html'
 
     def get_context_data(self, **kwargs):
+        """
+        Add shipping options and user data (if authenticated) to the context.
+        """
         logger.info("Rendering checkout page.")
         context = super().get_context_data(**kwargs)
         context['shipping_options'] = [
@@ -199,6 +201,15 @@ class CheckoutPageView(TemplateView):
             {'value': 'EXPRESS', 'label': 'Express'},
             {'value': 'PICKUP', 'label': 'On-hand in Shop'},
         ]
+
+        # Add default user information for authenticated users
+        if self.request.user.is_authenticated:
+            context['user_name'] = self.request.user.get_full_name()
+            context['user_email'] = self.request.user.email
+        else:
+            context['user_name'] = None
+            context['user_email'] = None
+
         logger.debug(f"Checkout page context: {context}")
         return context
 
@@ -206,19 +217,19 @@ class CheckoutPageView(TemplateView):
         logger.info("Received POST request for checkout.")
         try:
             order_service = OrderService(request)
-            order = order_service.create_order()
+            body = json.loads(request.body)
+            order = order_service.create_order(body)
             if order:
                 logger.info(f"Order created successfully: {order.order_number}")
                 return JsonResponse({'status': 'success', 'order_number': order.order_number})
             logger.warning("Order creation failed.")
             return JsonResponse({'status': 'error', 'message': 'Failed to place order.'})
+        except json.JSONDecodeError as e:
+            logger.error(f"Invalid JSON in request body: {e}", exc_info=True)
+            return JsonResponse({'status': 'error', 'message': 'Invalid JSON data in request body.'})
         except Exception as e:
             logger.error(f"Error during checkout: {e}", exc_info=True)
             return JsonResponse({'status': 'error', 'message': str(e)})
-
-
-
-
 
 
 from django.contrib.auth.signals import user_logged_in

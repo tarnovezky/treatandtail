@@ -12,11 +12,12 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+
 class OrderService:
     def __init__(self, request):
         self.request = request
 
-    def create_order(self):
+    def create_order(self, data):
         logger.info("Starting order creation process.")
         cart = self._get_user_cart()
         if not cart:
@@ -27,14 +28,15 @@ class OrderService:
         try:
             with transaction.atomic():
                 logger.info("Transaction started.")
-                order_data = self._extract_order_data(cart)
+                order_data = self._extract_order_data(cart, data)
                 logger.debug(f"Extracted order data: {order_data}")
-                self._send_order_confirmation_email(order_data)
-                logger.info("Order confirmation email sent.")
                 order = self._create_order_record(order_data)
                 logger.info(f"Order record created: {order}")
                 self._create_order_items(cart, order)
                 logger.info("Order items created successfully.")
+                if self.request.user.is_authenticated:
+                    self._send_order_confirmation_email(order_data)
+                    logger.info("Order confirmation email sent.")
                 cart.delete()
                 logger.info("Cart deleted after order placement.")
                 messages.success(self.request, 'Order placed successfully!')
@@ -46,37 +48,39 @@ class OrderService:
 
     def _get_user_cart(self):
         logger.info("Retrieving user's cart.")
-        cart = Cart.objects.filter(user=self.request.user, is_active=True).first()
+        if self.request.user.is_authenticated:
+            cart = Cart.objects.filter(user=self.request.user, is_active=True).first()
+        else:
+            session_key = self.request.session.session_key
+            if not session_key:
+                self.request.session.create()
+                session_key = self.request.session.session_key
+            cart = Cart.objects.filter(session_key=session_key, is_active=True).first()
+
         if not cart:
-            logger.warning("No active cart found for the user.")
+            logger.warning("No active cart found.")
         return cart
 
-    def _extract_order_data(self, cart):
+    def _extract_order_data(self, cart, data):
         try:
             logger.info("Extracting order data from the request and cart.")
-            raw_body = self.request.body.decode('utf-8')
-            logger.debug(f"Raw request body: {raw_body}")
-            if not raw_body:
-                raise ValueError("Request body is empty.")
-            request_data = json.loads(raw_body)
             return {
-                'customer_comment': request_data.get('comment', ''),
-                'customer_phone': request_data.get('phone', ''),
-                'shipping_address': request_data.get('shipping_address', ''),
-                'shipping_type': request_data.get('shipping_type', 'STANDARD'),
-                'coupon': request_data.get('coupon', ''),
+                'name': data.get('name', '') if not self.request.user.is_authenticated else self.request.user.get_full_name(),
+                'email': data.get('email', '') if not self.request.user.is_authenticated else self.request.user.email,
+                'customer_comment': data.get('comment', ''),
+                'customer_phone': data.get('phone', ''),
+                'shipping_address': data.get('shipping_address', ''),
+                'shipping_type': data.get('shipping_type', 'STANDARD'),
+                'coupon': data.get('coupon', ''),
                 'cart_items': cart.items.all(),
                 'cart': cart,
                 'short_id': cart.short_id(),
                 'order_time': localtime(now()),
                 'domain': get_current_site(self.request).domain
             }
-        except json.JSONDecodeError as e:
-            logger.error(f"Invalid JSON in request body: {e}", exc_info=True)
-            raise ValueError("Request body must contain valid JSON.")
         except Exception as e:
             logger.error(f"Error extracting order data: {e}", exc_info=True)
-            raise
+            raise ValueError("Invalid request data.")
 
     def _send_order_confirmation_email(self, order_data):
         try:
@@ -93,7 +97,7 @@ class OrderService:
             email_html = render_to_string('shop/emails/order_email.html', email_context)
             text_content = strip_tags(email_html)
             subject = 'Your Order Details'
-            to_email = order_data['cart'].user.email
+            to_email = order_data['email']
             email = EmailMultiAlternatives(subject, text_content, to=[to_email])
             email.attach_alternative(email_html, "text/html")
             email.send()
@@ -106,13 +110,15 @@ class OrderService:
         try:
             logger.info("Creating order record.")
             return Order.objects.create(
-                user=self.request.user,
+                user=self.request.user if self.request.user.is_authenticated else None,
+                name=order_data['name'],
+                email=order_data['email'],
                 order_number=order_data['cart'].id,
                 total_price=order_data['cart'].total_price,
                 shipping_address=order_data['shipping_address'],
                 shipping_type=order_data['shipping_type'],
                 coupon=order_data['coupon'],
-                status='NEW'
+                status='UNPAID'
             )
         except Exception as e:
             logger.error(f"Error creating order record: {e}", exc_info=True)
@@ -125,7 +131,7 @@ class OrderService:
                 OrderItem.objects.create(
                     order=order,
                     product=cart_item.product,
-                    flavor=cart_item.flavor,  # Save the selected flavor
+                    flavor=cart_item.flavor,
                     quantity=cart_item.quantity,
                     price=cart_item.total_price
                 )
@@ -133,4 +139,3 @@ class OrderService:
         except Exception as e:
             logger.error(f"Error creating order items: {e}", exc_info=True)
             raise
-
