@@ -119,6 +119,11 @@ class CartManager:
         cart_item.delete()
         return redirect('cart')
 
+    def get_cart_items(self):
+        """Retrieve all items in the cart."""
+        cart = self.get_cart()
+        return cart.items.all()
+
 
 # Cart-related views
 @csrf_exempt

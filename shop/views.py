@@ -192,23 +192,28 @@ class CheckoutPageView(TemplateView):
 
     def get_context_data(self, **kwargs):
         """
-        Add shipping options and user data (if authenticated) to the context.
+        Add shipping options, user data, and cart summary to the context.
         """
         logger.info("Rendering checkout page.")
         context = super().get_context_data(**kwargs)
+
+        # Shipping options
         context['shipping_options'] = [
             {'value': 'STANDARD', 'label': 'Standard'},
             {'value': 'EXPRESS', 'label': 'Express'},
             {'value': 'PICKUP', 'label': 'On-hand in Shop'},
         ]
 
-        # Add default user information for authenticated users
-        if self.request.user.is_authenticated:
-            context['user_name'] = self.request.user.get_full_name()
-            context['user_email'] = self.request.user.email
-        else:
-            context['user_name'] = None
-            context['user_email'] = None
+        # Add cart and order summary
+        cart_manager = CartManager(self.request)
+        cart = cart_manager.get_cart()
+        context['cart_items'] = cart_manager.get_cart_items()
+        context['cart_summary'] = {
+            'subtotal': sum(item.total_price for item in context['cart_items']),
+            'discount': 0,  # Update discount logic if applicable
+            'shipping_cost': 0,  # Update shipping cost logic if applicable
+            'total': sum(item.total_price for item in context['cart_items']),
+        }
 
         logger.debug(f"Checkout page context: {context}")
         return context

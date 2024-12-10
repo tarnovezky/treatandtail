@@ -22,95 +22,160 @@
     <div id="Wrapper">
         <header class="cap-box">{% include 'shop/modules/_cap.html' %}</header>
         <div class="content">
-            <section class="checkout-area">
-                <main class="checkout-main-info">
-                    <h2 class="checkout-title">Checkout</h2>
-                    <form id="checkoutForm" method="POST" class="checkout-form">
-                        {% csrf_token %}
+            <section class="checkout-progress">
+                <div class="step completed">
+                    <div class="circle">1</div>
+                    <p>Shipping & Cart</p>
+                </div>
+                <div class="step active">
+                    <div class="circle">2</div>
+                    <p>Checkout & Payment</p>
+                </div>
+                <div class="step">
+                    <div class="circle">3</div>
+                    <p>Order Review</p>
+                </div>
+            </section>
 
-                        {% if not user.is_authenticated %}
-                            <div class="form-group">
-                                <label for="name">Full Name</label>
-                                <input id="name" type="text" name="name" placeholder="Enter your full name" required>
-                            </div>
-                            <hr>
-                            <div class="form-group">
-                                <label for="email">Email Address</label>
-                                <input id="email" type="email" name="email" placeholder="Enter your email" required>
-                            </div>
-                            <hr>
-                        {% endif %}
+            <div class="checkout-content">
+                <div class="left-section">
+                    <main class="checkout-main-info">
+                        <form id="checkoutForm" method="POST" class="checkout-form">
+                            {% csrf_token %}
 
-                        <div class="form-group">
-                            <label for="shipping_address">Shipping Address</label>
-                            <textarea id="shipping_address" name="shipping_address" placeholder="Enter your address" required></textarea>
+                            {% if not user.is_authenticated %}
+                                <div class="form-group">
+                                    <label for="name">Full Name</label>
+                                    <input id="name" type="text" name="name" placeholder="Enter your full name" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="email">Email Address</label>
+                                    <input id="email" type="email" name="email" placeholder="Enter your email" required>
+                                </div>
+                            {% endif %}
+
+                            <div class="form-group">
+                                <label for="shipping_type">Shipping Type</label>
+                                <select id="shipping_type" name="shipping_type" required>
+                                    <option value="" disabled selected>Select a shipping type</option>
+                                    <option value="STANDARD">Standard</option>
+                                    <option value="EXPRESS">Express</option>
+                                    <option value="PICKUP">On-hand in Shop</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group" id="shipping-address-group">
+                                <label for="shipping_address">Shipping Address</label>
+                                <textarea id="shipping_address" name="shipping_address" placeholder="Enter your address" required></textarea>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="coupon">Coupon Code</label>
+                                <input id="coupon" type="text" name="coupon" placeholder="Enter coupon code (optional)">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="comment">Additional Comments</label>
+                                <textarea id="comment" name="comment" placeholder="Add any comments"></textarea>
+                            </div>
+
+                            <div class="checkout-actions">
+                                <button type="button" id="submitOrder" class="submit-button">Place Order</button>
+                            </div>
+                        </form>
+                    </main>
+                </div>
+                <div class="right-section">
+                    <div class="order-summary">
+                        <h3>Order Summary</h3>
+
+                        <!-- Cart Overview -->
+                        <hr class="main-string-order">
+                        <div class="cart-back-review">
+                            <div><i class="fa-solid fa-cart-shopping"></i><strong>{{ cart_items|length }} Item(s) in Cart</strong></div>
+                            <div class="cart-link"><a href="{% url 'cart' %}"> View Cart </a></div>
                         </div>
-                        <hr>
-                        <div class="form-group">
-                            <label for="shipping_type">Shipping Type</label>
-                            <select id="shipping_type" name="shipping_type" required>
-                                <option value="" disabled selected>Select a shipping type</option>
-                                <option value="STANDARD">Standard</option>
-                                <option value="EXPRESS">Express</option>
-                                <option value="PICKUP">On-hand in Shop</option>
-                            </select>
-                        </div>
-                        <hr>
-                        <div class="form-group">
-                            <label for="coupon">Coupon Code</label>
-                            <input id="coupon" type="text" name="coupon" placeholder="Enter coupon code (optional)">
-                        </div>
-                        <hr>
-                        <div class="form-group">
-                            <label for="comment">Additional Comments</label>
-                            <textarea id="comment" name="comment" placeholder="Add any comments"></textarea>
-                        </div>
-                        <hr>
-                        <div class="checkout-actions">
-                            <button type="button" id="submitOrder" class="submit-button">Place Order</button>
-                        </div>
-                    </form>
-                </main>
+
+                        <hr class="gray-string-order-summary">
+
+                        <!-- Cart Items -->
+                        {% for item in cart_items %}
+                            <p>{{ item.quantity }} x {{ item.product.name }}
+                               {% if item.flavor %}({{ item.flavor.flavor_name }}){% endif %}: ${{ item.total_price }}</p>
+                        {% endfor %}
+
+                        <!-- Order Breakdown -->
+                        <p>Order Subtotal: ${{ cart_summary.subtotal }}</p>
+                        <p>Sale Discount: -${{ cart_summary.discount }}</p>
+                        <p>Net Order Subtotal: ${{ cart_summary.subtotal|floatformat:2 }}</p>
+                        <p>Shipping: ${{ cart_summary.shipping_cost }}</p>
+                        <hr class="gray-string-order-summary">
+
+                        <p><strong>Total:</strong> ${{ cart_summary.total }}</p>
+                    </div>
+                </div>
+
+
+            </div>
+
+
             </section>
         </div>
     </div>
 
 
     <!-- JavaScript -->
-    <script>
-        document.getElementById('submitOrder').addEventListener('click', function (event) {
-            event.preventDefault(); // Prevent default form submission
+<script>
+    document.getElementById('shipping_type').addEventListener('change', function () {
+        const shippingAddressField = document.getElementById('shipping-address-group'); // Parent div
+        const shippingAddressInput = document.getElementById('shipping_address'); // Input field
 
-            const form = document.getElementById('checkoutForm');
-            const formData = new FormData(form);
+        if (this.value === 'PICKUP') {
+            shippingAddressField.style.display = 'none'; // Hide the address field
+            shippingAddressInput.removeAttribute('required'); // Remove required attribute
+        } else {
+            shippingAddressField.style.display = 'block'; // Show the address field
+            shippingAddressInput.setAttribute('required', 'required'); // Add required attribute
+        }
+    });
 
-            const data = {};
-            formData.forEach((value, key) => {
-                data[key] = value;
-            });
+    document.getElementById('submitOrder').addEventListener('click', function (event) {
+        event.preventDefault(); // Prevent default form submission
 
-            fetch("{% url 'checkout' %}", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': '{{ csrf_token }}'
-                },
-                body: JSON.stringify(data)
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === 'success') {
-                    alert(`Order placed successfully! Order Number: ${data.order_number}`);
-                    window.location.href = "/"; // Redirect to home or success page
-                } else {
-                    alert(`Error: ${data.message}`);
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('An unexpected error occurred.');
-            });
+        const form = document.getElementById('checkoutForm');
+        const formData = new FormData(form);
+
+        const data = {};
+        formData.forEach((value, key) => {
+            data[key] = value;
         });
-    </script>
+
+        fetch("{% url 'checkout' %}", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                alert(`Order placed successfully! Order Number: ${data.order_number}`);
+                window.location.href = "/"; // Redirect to home or success page
+            } else {
+                alert(`Error: ${data.message}`);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An unexpected error occurred.');
+        });
+    });
+</script>
+
+
 </body>
 </html>
